@@ -1,0 +1,9 @@
+{
+  "name": "halp-rent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A single-page static rent application form",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
