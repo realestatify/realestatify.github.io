@@ -1,4 +1,4 @@
-# Halp Rent — Application Form
+# Realestatify — Application Form
 
 A single-page static rent application form. No build step, no server required — just open `index.html` in a browser.
 
