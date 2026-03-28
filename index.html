@@ -299,98 +299,74 @@
             Provide your current employment details. This helps us verify your ability to meet rental payments.
           </article>
 
-          <label for="employment-type"
-            >Employment type
-            <select id="employment-type" name="employment_type" aria-label="Select type">
-              <option selected disabled value="">Select type</option>
-              <option value="full-time">Full-time</option>
-              <option value="part-time">Part-time</option>
-              <option value="casual">Casual</option>
-              <option value="self-employed">Self-employed</option>
-              <option value="contractor">Contractor</option>
-              <option value="retired">Retired</option>
-              <option value="student">Student</option>
-              <option value="unemployed">Unemployed</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
+          <div id="employments-container"></div>
 
-          <label for="company"
-            >Company / Employer
-            <input type="text" id="company" name="company" placeholder="Company name" />
-          </label>
+          <fieldset class="grid">
+            <button type="button" id="btn-add-employment" class="secondary outline">Add employment</button>
+            <label for="currently-unemployed" style="vertical-align: middle">
+              <input type="checkbox" id="currently-unemployed" name="currently_unemployed" role="switch" />
+              Currently unemployed
+            </label>
+          </fieldset>
 
-          <label for="role"
-            >Role / Title
-            <input type="text" id="role" name="role" placeholder="Job title" />
-          </label>
-
-          <label for="emp-start-date"
-            >Start date
-            <input type="date" id="emp-start-date" name="emp_start_date" />
-          </label>
-
-          <div id="prev-employments-container"></div>
-
-          <button type="button" id="btn-add-prev-employment" class="secondary outline">
-            Add previous employment...
-          </button>
-
-          <template id="prev-employment-template">
+          <template id="employment-template">
             <fieldset>
-              <legend>Previous employment</legend>
-              <label for="prev-employment-type-__INDEX__"
-                >Employment type
-                <select
-                  id="prev-employment-type-__INDEX__"
-                  name="prev_employment[__INDEX__][type]"
-                  aria-label="Select type"
-                >
-                  <option selected disabled value="">Select type</option>
-                  <option value="full-time">Full-time</option>
-                  <option value="part-time">Part-time</option>
-                  <option value="casual">Casual</option>
-                  <option value="self-employed">Self-employed</option>
-                  <option value="contractor">Contractor</option>
-                  <option value="retired">Retired</option>
-                  <option value="student">Student</option>
-                  <option value="unemployed">Unemployed</option>
-                  <option value="other">Other</option>
-                </select>
-              </label>
-              <label for="prev-employment-company-__INDEX__"
-                >Company / Employer
+              <legend>Employment</legend>
+              <label for="employment-company-__INDEX__"
+                >Company / Employer <abbr title="required">*</abbr>
                 <input
                   type="text"
-                  id="prev-employment-company-__INDEX__"
-                  name="prev_employment[__INDEX__][company]"
+                  id="employment-company-__INDEX__"
+                  name="employment[__INDEX__][company]"
                   placeholder="Company name"
+                  required
+                  aria-required="true"
                 />
               </label>
-              <label for="prev-employment-role-__INDEX__"
-                >Role / Title
+              <label for="employment-role-__INDEX__"
+                >Role / Title <abbr title="required">*</abbr>
                 <input
                   type="text"
-                  id="prev-employment-role-__INDEX__"
-                  name="prev_employment[__INDEX__][role]"
+                  id="employment-role-__INDEX__"
+                  name="employment[__INDEX__][role]"
                   placeholder="Job title"
+                  required
+                  aria-required="true"
                 />
               </label>
               <fieldset class="grid">
-                <label for="prev-employment-start-__INDEX__"
-                  >Start date
+                <label for="employment-type-__INDEX__"
+                  >Employment type <abbr title="required">*</abbr>
+                  <select
+                    id="employment-type-__INDEX__"
+                    name="employment[__INDEX__][type]"
+                    aria-label="Select type"
+                    required
+                    aria-required="true"
+                  >
+                    <option selected disabled value="">Select type</option>
+                    <option value="full-time">Full-time</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="casual">Casual</option>
+                    <option value="self-employed">Self-employed</option>
+                    <option value="contractor">Contractor</option>
+                    <option value="retired">Retired</option>
+                    <option value="student">Student</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+                <label for="employment-start-__INDEX__"
+                  >Start date <abbr title="required">*</abbr>
                   <input
                     type="date"
-                    id="prev-employment-start-__INDEX__"
-                    name="prev_employment[__INDEX__][start_date]"
+                    id="employment-start-__INDEX__"
+                    name="employment[__INDEX__][start_date]"
+                    required
+                    aria-required="true"
                   />
                 </label>
-                <label for="prev-employment-end-__INDEX__"
-                  >End date
-                  <input type="date" id="prev-employment-end-__INDEX__" name="prev_employment[__INDEX__][end_date]" />
-                </label>
               </fieldset>
-              <button type="button" class="secondary outline btn-remove-prev-employment">Remove</button>
+              <button type="button" class="secondary outline btn-remove-employment">Remove</button>
             </fieldset>
           </template>
 
