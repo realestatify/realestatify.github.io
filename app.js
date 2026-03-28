@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const noIncome = document.getElementById('no-income');
   const incomeType = document.getElementById('income-type');
   const incomeAmount = document.getElementById('income-amount');
+  const incomesContainer = document.getElementById('incomes-container');
   if (noIncome && incomeType && incomeAmount) {
     noIncome.addEventListener('change', function () {
       const disabled = noIncome.checked;
@@ -90,20 +91,53 @@ document.addEventListener('DOMContentLoaded', function () {
       incomeType.setAttribute('aria-disabled', String(disabled));
       incomeAmount.disabled = disabled;
       incomeAmount.setAttribute('aria-disabled', String(disabled));
+      if (incomesContainer) {
+        incomesContainer.querySelectorAll('fieldset select, fieldset input').forEach(function (el) {
+          el.disabled = disabled;
+          el.setAttribute('aria-disabled', String(disabled));
+        });
+      }
     });
   }
 
   // no-ex-occupant checkbox: disable occupant name fields
   const noExOccupant = document.getElementById('no-ex-occupant');
-  const occupantFirst = document.getElementById('occupant-first-name');
-  const occupantLast = document.getElementById('occupant-last-name');
-  if (noExOccupant && occupantFirst && occupantLast) {
+  const occupantsContainer = document.getElementById('occupants-container');
+  if (noExOccupant && occupantsContainer) {
     noExOccupant.addEventListener('change', function () {
       const disabled = noExOccupant.checked;
-      occupantFirst.disabled = disabled;
-      occupantFirst.setAttribute('aria-disabled', String(disabled));
-      occupantLast.disabled = disabled;
-      occupantLast.setAttribute('aria-disabled', String(disabled));
+      occupantsContainer.querySelectorAll('fieldset input').forEach(function (el) {
+        el.disabled = disabled;
+        el.setAttribute('aria-disabled', String(disabled));
+      });
+    });
+  }
+
+  // Add additional occupant entries
+  let additionalOccupantCounter = 0;
+  const btnAddOccupant = document.getElementById('btn-add-occupant');
+  const additionalOccupantTemplate = document.getElementById('additional-occupant-template');
+  if (btnAddOccupant && occupantsContainer && additionalOccupantTemplate) {
+    btnAddOccupant.addEventListener('click', function () {
+      const idx = additionalOccupantCounter++;
+      const clone = additionalOccupantTemplate.content.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(function (el) {
+        el.id = el.id.replace(/__INDEX__/g, idx);
+      });
+      clone.querySelectorAll('[for]').forEach(function (el) {
+        el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
+      });
+      clone.querySelectorAll('[name]').forEach(function (el) {
+        el.name = el.name.replace(/__INDEX__/g, idx);
+      });
+      const entry = clone.querySelector('fieldset');
+      const removeBtn = clone.querySelector('.btn-remove-occupant');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function () {
+          entry.remove();
+        });
+      }
+      occupantsContainer.appendChild(clone);
     });
   }
 
@@ -185,6 +219,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       }
       prevEmploymentsContainer.appendChild(clone);
+    });
+  }
+
+  // Add additional income entries
+  let additionalIncomeCounter = 0;
+  const btnAddIncome = document.getElementById('btn-add-income');
+  const additionalIncomeTemplate = document.getElementById('additional-income-template');
+  if (btnAddIncome && incomesContainer && additionalIncomeTemplate) {
+    btnAddIncome.addEventListener('click', function () {
+      const idx = additionalIncomeCounter++;
+      const clone = additionalIncomeTemplate.content.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(function (el) {
+        el.id = el.id.replace(/__INDEX__/g, idx);
+      });
+      clone.querySelectorAll('[for]').forEach(function (el) {
+        el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
+      });
+      clone.querySelectorAll('[name]').forEach(function (el) {
+        el.name = el.name.replace(/__INDEX__/g, idx);
+      });
+      const entry = clone.querySelector('fieldset');
+      const removeBtn = clone.querySelector('.btn-remove-income');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function () {
+          entry.remove();
+        });
+      }
+      incomesContainer.appendChild(clone);
     });
   }
 

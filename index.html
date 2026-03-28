@@ -424,23 +424,50 @@
           <h3>Finances</h3>
           <h4>Income sources</h4>
 
-          <label for="income-type"
-            >Income type
-            <select id="income-type" name="income_type" aria-label="Select type">
-              <option selected disabled value="">Select type</option>
-              <option value="salary">Salary / Wages</option>
-              <option value="self-employed">Self-employed</option>
-              <option value="centrelink">Centrelink / Government benefits</option>
-              <option value="rental">Rental income</option>
-              <option value="investments">Investments</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
+          <div id="incomes-container">
+            <label for="income-type"
+              >Income type
+              <select id="income-type" name="income_type" aria-label="Select type">
+                <option selected disabled value="">Select type</option>
+                <option value="salary">Salary / Wages</option>
+                <option value="self-employed">Self-employed</option>
+                <option value="centrelink">Centrelink / Government benefits</option>
+                <option value="rental">Rental income</option>
+                <option value="investments">Investments</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
 
-          <label for="income-amount"
-            >Income amount (per week)
-            <input type="number" id="income-amount" name="income_amount" placeholder="0.00" min="0" step="0.01" />
-          </label>
+            <label for="income-amount"
+              >Income amount (per week)
+              <input type="number" id="income-amount" name="income_amount" placeholder="0.00" min="0" step="0.01" />
+            </label>
+          </div>
+
+          <button type="button" id="btn-add-income" class="secondary outline">Add another income source</button>
+
+          <template id="additional-income-template">
+            <fieldset>
+              <legend>Additional income source</legend>
+              <label for="additional-income-type-__INDEX__"
+                >Income type
+                <select id="additional-income-type-__INDEX__" name="additional_income[__INDEX__][type]" aria-label="Select type">
+                  <option selected disabled value="">Select type</option>
+                  <option value="salary">Salary / Wages</option>
+                  <option value="self-employed">Self-employed</option>
+                  <option value="centrelink">Centrelink / Government benefits</option>
+                  <option value="rental">Rental income</option>
+                  <option value="investments">Investments</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+              <label for="additional-income-amount-__INDEX__"
+                >Income amount (per week)
+                <input type="number" id="additional-income-amount-__INDEX__" name="additional_income[__INDEX__][amount]" placeholder="0.00" min="0" step="0.01" />
+              </label>
+              <button type="button" class="secondary outline btn-remove-income">Remove</button>
+            </fieldset>
+          </template>
 
           <label for="no-income">
             <input type="checkbox" id="no-income" name="no_income" />
@@ -503,16 +530,37 @@
           <h3>People</h3>
           <article>Will anyone else be living with you?</article>
           <h4>Additional occupant</h4>
-          <fieldset class="grid">
-            <label for="occupant-first-name"
-              >First name
-              <input type="text" id="occupant-first-name" name="occupant_first_name" placeholder="First name" />
-            </label>
-            <label for="occupant-last-name"
-              >Last name
-              <input type="text" id="occupant-last-name" name="occupant_last_name" placeholder="Last name" />
-            </label>
-          </fieldset>
+
+          <div id="occupants-container">
+            <fieldset class="grid">
+              <label for="occupant-first-name"
+                >First name
+                <input type="text" id="occupant-first-name" name="occupant_first_name" placeholder="First name" />
+              </label>
+              <label for="occupant-last-name"
+                >Last name
+                <input type="text" id="occupant-last-name" name="occupant_last_name" placeholder="Last name" />
+              </label>
+            </fieldset>
+          </div>
+
+          <button type="button" id="btn-add-occupant" class="secondary outline">Add another occupant</button>
+
+          <template id="additional-occupant-template">
+            <fieldset>
+              <legend>Additional occupant</legend>
+              <label for="additional-occupant-first-name-__INDEX__"
+                >First name
+                <input type="text" id="additional-occupant-first-name-__INDEX__" name="additional_occupant[__INDEX__][first_name]" placeholder="First name" />
+              </label>
+              <label for="additional-occupant-last-name-__INDEX__"
+                >Last name
+                <input type="text" id="additional-occupant-last-name-__INDEX__" name="additional_occupant[__INDEX__][last_name]" placeholder="Last name" />
+              </label>
+              <button type="button" class="secondary outline btn-remove-occupant">Remove</button>
+            </fieldset>
+          </template>
+
           <label for="no-ex-occupant">
             <input type="checkbox" id="no-ex-occupant" name="no_ex_occupant" />
             I'll be the only occupant
