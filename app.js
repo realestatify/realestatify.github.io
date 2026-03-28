@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   const TOTAL_STEPS = document.querySelectorAll('.form-step').length;
   let currentStep = 1;
 
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnSubmit = document.getElementById('btn-submit');
 
   function showStep(n) {
-    document.querySelectorAll('.form-step').forEach(function (el) {
+    document.querySelectorAll('.form-step').forEach(el => {
       el.hidden = true;
     });
     const target = document.querySelector('.form-step[data-step="' + n + '"]');
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!stepEl) return true;
     const fields = stepEl.querySelectorAll('[required]');
     let firstInvalid = null;
-    fields.forEach(function (field) {
+    fields.forEach(field => {
       if (!field.value || field.value.trim() === '') {
         field.setAttribute('aria-invalid', 'true');
         if (!firstInvalid) firstInvalid = field;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (btnBack) {
-    btnBack.addEventListener('click', function () {
+    btnBack.addEventListener('click', () => {
       if (currentStep > 1) {
         showStep(currentStep - 1);
       }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (btnNext) {
-    btnNext.addEventListener('click', function () {
+    btnNext.addEventListener('click', () => {
       if (validateStep(currentStep) && currentStep < TOTAL_STEPS) {
         showStep(currentStep + 1);
       }
@@ -74,25 +74,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const aboutMe = document.getElementById('about-me');
   const aboutMeCount = document.getElementById('about-me-count');
   if (aboutMe && aboutMeCount) {
-    aboutMe.addEventListener('input', function () {
+    aboutMe.addEventListener('input', () => {
       aboutMeCount.textContent = aboutMe.value.length;
     });
   }
 
   // no-income checkbox: disable income fields
   const noIncome = document.getElementById('no-income');
-  const incomeType = document.getElementById('income-type');
-  const incomeAmount = document.getElementById('income-amount');
+  const btnAddIncome = document.getElementById('btn-add-income');
   const incomesContainer = document.getElementById('incomes-container');
-  if (noIncome && incomeType && incomeAmount) {
-    noIncome.addEventListener('change', function () {
+  if (noIncome && btnAddIncome) {
+    noIncome.addEventListener('change', () => {
       const disabled = noIncome.checked;
-      incomeType.disabled = disabled;
-      incomeType.setAttribute('aria-disabled', String(disabled));
-      incomeAmount.disabled = disabled;
-      incomeAmount.setAttribute('aria-disabled', String(disabled));
+      btnAddIncome.disabled = disabled;
+      btnAddIncome.setAttribute('aria-disabled', String(disabled));
       if (incomesContainer) {
-        incomesContainer.querySelectorAll('fieldset select, fieldset input').forEach(function (el) {
+        incomesContainer.querySelectorAll('fieldset select, fieldset input').forEach(el => {
           el.disabled = disabled;
           el.setAttribute('aria-disabled', String(disabled));
         });
@@ -102,11 +99,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // no-ex-occupant checkbox: disable occupant name fields
   const noExOccupant = document.getElementById('no-ex-occupant');
+  const btnAddOccupant = document.getElementById('btn-add-occupant');
   const occupantsContainer = document.getElementById('occupants-container');
   if (noExOccupant && occupantsContainer) {
-    noExOccupant.addEventListener('change', function () {
+    noExOccupant.addEventListener('change', () => {
       const disabled = noExOccupant.checked;
-      occupantsContainer.querySelectorAll('fieldset input').forEach(function (el) {
+      btnAddOccupant.disabled = disabled;
+      btnAddOccupant.setAttribute('aria-disabled', String(disabled));
+      occupantsContainer.querySelectorAll('fieldset input').forEach(el => {
         el.disabled = disabled;
         el.setAttribute('aria-disabled', String(disabled));
       });
@@ -114,26 +114,25 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Add additional occupant entries
-  let additionalOccupantCounter = 0;
-  const btnAddOccupant = document.getElementById('btn-add-occupant');
-  const additionalOccupantTemplate = document.getElementById('additional-occupant-template');
-  if (btnAddOccupant && occupantsContainer && additionalOccupantTemplate) {
-    btnAddOccupant.addEventListener('click', function () {
-      const idx = additionalOccupantCounter++;
-      const clone = additionalOccupantTemplate.content.cloneNode(true);
-      clone.querySelectorAll('[id]').forEach(function (el) {
+  let occupantCounter = 0;
+  const occupantTemplate = document.getElementById('occupant-template');
+  if (btnAddOccupant && occupantsContainer && occupantTemplate) {
+    btnAddOccupant.addEventListener('click', () => {
+      const idx = occupantCounter++;
+      const clone = occupantTemplate.content.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(el => {
         el.id = el.id.replace(/__INDEX__/g, idx);
       });
-      clone.querySelectorAll('[for]').forEach(function (el) {
+      clone.querySelectorAll('[for]').forEach(el => {
         el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
       });
-      clone.querySelectorAll('[name]').forEach(function (el) {
+      clone.querySelectorAll('[name]').forEach(el => {
         el.name = el.name.replace(/__INDEX__/g, idx);
       });
       const entry = clone.querySelector('fieldset');
       const removeBtn = clone.querySelector('.btn-remove-occupant');
       if (removeBtn) {
-        removeBtn.addEventListener('click', function () {
+        removeBtn.addEventListener('click', () => {
           entry.remove();
         });
       }
@@ -170,22 +169,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const prevAddressesContainer = document.getElementById('prev-addresses-container');
   const prevAddressTemplate = document.getElementById('prev-address-template');
   if (btnAddPrevAddress && prevAddressesContainer && prevAddressTemplate) {
-    btnAddPrevAddress.addEventListener('click', function () {
+    btnAddPrevAddress.addEventListener('click', () => {
       const idx = prevAddressCounter++;
       const clone = prevAddressTemplate.content.cloneNode(true);
-      clone.querySelectorAll('[id]').forEach(function (el) {
+      clone.querySelectorAll('[id]').forEach(el => {
         el.id = el.id.replace(/__INDEX__/g, idx);
       });
-      clone.querySelectorAll('[for]').forEach(function (el) {
+      clone.querySelectorAll('[for]').forEach(el => {
         el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
       });
-      clone.querySelectorAll('[name]').forEach(function (el) {
+      clone.querySelectorAll('[name]').forEach(el => {
         el.name = el.name.replace(/__INDEX__/g, idx);
       });
       const entry = clone.querySelector('fieldset');
       const removeBtn = clone.querySelector('.btn-remove-prev-address');
       if (removeBtn) {
-        removeBtn.addEventListener('click', function () {
+        removeBtn.addEventListener('click', () => {
           entry.remove();
         });
       }
@@ -199,22 +198,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const prevEmploymentsContainer = document.getElementById('prev-employments-container');
   const prevEmploymentTemplate = document.getElementById('prev-employment-template');
   if (btnAddPrevEmployment && prevEmploymentsContainer && prevEmploymentTemplate) {
-    btnAddPrevEmployment.addEventListener('click', function () {
+    btnAddPrevEmployment.addEventListener('click', () => {
       const idx = prevEmploymentCounter++;
       const clone = prevEmploymentTemplate.content.cloneNode(true);
-      clone.querySelectorAll('[id]').forEach(function (el) {
+      clone.querySelectorAll('[id]').forEach(el => {
         el.id = el.id.replace(/__INDEX__/g, idx);
       });
-      clone.querySelectorAll('[for]').forEach(function (el) {
+      clone.querySelectorAll('[for]').forEach(el => {
         el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
       });
-      clone.querySelectorAll('[name]').forEach(function (el) {
+      clone.querySelectorAll('[name]').forEach(el => {
         el.name = el.name.replace(/__INDEX__/g, idx);
       });
       const entry = clone.querySelector('fieldset');
       const removeBtn = clone.querySelector('.btn-remove-prev-employment');
       if (removeBtn) {
-        removeBtn.addEventListener('click', function () {
+        removeBtn.addEventListener('click', () => {
           entry.remove();
         });
       }
@@ -222,27 +221,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Add additional income entries
-  let additionalIncomeCounter = 0;
-  const btnAddIncome = document.getElementById('btn-add-income');
-  const additionalIncomeTemplate = document.getElementById('additional-income-template');
-  if (btnAddIncome && incomesContainer && additionalIncomeTemplate) {
-    btnAddIncome.addEventListener('click', function () {
-      const idx = additionalIncomeCounter++;
-      const clone = additionalIncomeTemplate.content.cloneNode(true);
-      clone.querySelectorAll('[id]').forEach(function (el) {
+  // Add income entries
+  let incomeCounter = 0;
+  const incomeTemplate = document.getElementById('income-template');
+  if (btnAddIncome && incomesContainer && incomeTemplate) {
+    btnAddIncome.addEventListener('click', () => {
+      const idx = incomeCounter++;
+      const clone = incomeTemplate.content.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(el => {
         el.id = el.id.replace(/__INDEX__/g, idx);
       });
-      clone.querySelectorAll('[for]').forEach(function (el) {
+      clone.querySelectorAll('[for]').forEach(el => {
         el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
       });
-      clone.querySelectorAll('[name]').forEach(function (el) {
+      clone.querySelectorAll('[name]').forEach(el => {
         el.name = el.name.replace(/__INDEX__/g, idx);
       });
       const entry = clone.querySelector('fieldset');
       const removeBtn = clone.querySelector('.btn-remove-income');
       if (removeBtn) {
-        removeBtn.addEventListener('click', function () {
+        removeBtn.addEventListener('click', () => {
           entry.remove();
         });
       }
@@ -253,13 +251,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // Form submit: validate all steps
   const form = document.getElementById('rent-application');
   if (form) {
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('submit', event => {
       const requiredFields = form.querySelectorAll('[required]');
       let hasError = false;
       let firstInvalid = null;
       let firstInvalidStep = null;
 
-      requiredFields.forEach(function (field) {
+      requiredFields.forEach(field => {
         if (!field.value || field.value.trim() === '') {
           field.setAttribute('aria-invalid', 'true');
           hasError = true;
@@ -287,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Clear aria-invalid as user corrects fields
-    form.addEventListener('input', function (event) {
+    form.addEventListener('input', event => {
       const field = event.target;
       if (field.hasAttribute('required') && field.value && field.value.trim() !== '') {
         field.setAttribute('aria-invalid', 'false');
