@@ -4,32 +4,16 @@ A single-page static rent application form. No build step, no server required �
 
 ## Usage
 
-Open `index.html` directly in any modern browser. The form collects applicant details across a 7-step wizard and submits via your default email client.
-
-## Configuring the recipient email address
-
-Search for `var RECIPIENT` near the top of `app.js`:
-
-```js
-var RECIPIENT = 'rentapplication@example.com';
-```
-
-Replace `rentapplication@example.com` with the actual address before deploying or sharing the form.
-
-Also update the agency name in `index.html`: search for `"Your application will be sent to Times Real Estate"` and change it to the correct agency name.
+Open `index.html` directly in any modern browser. The form collects applicant details across a 7-step wizard and submits to Formspree.
 
 ## How submission works
 
-Clicking "Submit application" validates required fields, then opens the user's default email client with:
+Clicking "Submit application" validates required fields. When all fields are valid the form posts to Formspree (https://formspree.io/f/xgopozbe), which emails the submission to the configured recipient and redirects the user to a Formspree thank-you page.
 
-- To: the configured recipient address
-- Subject: "Rent Application"
-- Body: all form fields formatted as plain text
-
-No data is sent to any server. File upload fields (photo ID, supporting documents, income proof) are not transmitted — the email body contains only text fields. Attachments must be sent separately.
+File uploads (photo ID, supporting documents, income proof) are included in the submission via multipart/form-data encoding.
 
 ## Files
 
 - `index.html` — the form markup
 - `style.css` — visual overrides on top of PicoCSS
-- `app.js` — multi-step wizard navigation, character counter, pet/toggle selectors, and mailto submission
+- `app.js` — multi-step wizard navigation, character counter, pet/toggle selectors, and form validation
