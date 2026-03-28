@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-  var TOTAL_STEPS = document.querySelectorAll('.form-step').length;
-  var currentStep = 1;
+  const TOTAL_STEPS = document.querySelectorAll('.form-step').length;
+  let currentStep = 1;
 
-  var stepIndicator = document.getElementById('step-indicator');
-  var btnBack = document.getElementById('btn-back');
-  var btnNext = document.getElementById('btn-next');
-  var btnSubmit = document.getElementById('btn-submit');
+  const stepIndicator = document.getElementById('step-indicator');
+  const btnBack = document.getElementById('btn-back');
+  const btnNext = document.getElementById('btn-next');
+  const btnSubmit = document.getElementById('btn-submit');
 
   function showStep(n) {
     document.querySelectorAll('.form-step').forEach(function (el) {
       el.hidden = true;
     });
-    var target = document.querySelector('.form-step[data-step="' + n + '"]');
+    const target = document.querySelector('.form-step[data-step="' + n + '"]');
     if (target) {
       target.hidden = false;
     }
@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function validateStep(n) {
-    var stepEl = document.querySelector('.form-step[data-step="' + n + '"]');
+    const stepEl = document.querySelector('.form-step[data-step="' + n + '"]');
     if (!stepEl) return true;
-    var fields = stepEl.querySelectorAll('[required]');
-    var firstInvalid = null;
+    const fields = stepEl.querySelectorAll('[required]');
+    let firstInvalid = null;
     fields.forEach(function (field) {
       if (!field.value || field.value.trim() === '') {
         field.setAttribute('aria-invalid', 'true');
@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', function () {
   showStep(1);
 
   // Character counter for about-me textarea
-  var aboutMe = document.getElementById('about-me');
-  var aboutMeCount = document.getElementById('about-me-count');
+  const aboutMe = document.getElementById('about-me');
+  const aboutMeCount = document.getElementById('about-me-count');
   if (aboutMe && aboutMeCount) {
     aboutMe.addEventListener('input', function () {
       aboutMeCount.textContent = aboutMe.value.length;
@@ -80,12 +80,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // no-income checkbox: disable income fields
-  var noIncome = document.getElementById('no-income');
-  var incomeType = document.getElementById('income-type');
-  var incomeAmount = document.getElementById('income-amount');
+  const noIncome = document.getElementById('no-income');
+  const incomeType = document.getElementById('income-type');
+  const incomeAmount = document.getElementById('income-amount');
   if (noIncome && incomeType && incomeAmount) {
     noIncome.addEventListener('change', function () {
-      var disabled = noIncome.checked;
+      const disabled = noIncome.checked;
       incomeType.disabled = disabled;
       incomeType.setAttribute('aria-disabled', String(disabled));
       incomeAmount.disabled = disabled;
@@ -94,12 +94,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // no-ex-occupant checkbox: disable occupant name fields
-  var noExOccupant = document.getElementById('no-ex-occupant');
-  var occupantFirst = document.getElementById('occupant-first-name');
-  var occupantLast = document.getElementById('occupant-last-name');
+  const noExOccupant = document.getElementById('no-ex-occupant');
+  const occupantFirst = document.getElementById('occupant-first-name');
+  const occupantLast = document.getElementById('occupant-last-name');
   if (noExOccupant && occupantFirst && occupantLast) {
     noExOccupant.addEventListener('change', function () {
-      var disabled = noExOccupant.checked;
+      const disabled = noExOccupant.checked;
       occupantFirst.disabled = disabled;
       occupantFirst.setAttribute('aria-disabled', String(disabled));
       occupantLast.disabled = disabled;
@@ -108,17 +108,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Employment type: hide company/role/start-date labels for non-employed types
-  var employmentType = document.getElementById('employment-type');
-  var companyLabel = document.querySelector('label[for="company"]');
-  var roleLabel = document.querySelector('label[for="role"]');
-  var startDateLabel = document.querySelector('label[for="emp-start-date"]');
-  var companyInput = document.getElementById('company');
-  var roleInput = document.getElementById('role');
-  var startDateInput = document.getElementById('emp-start-date');
-  var noEmployerTypes = ['unemployed', 'retired', 'student'];
+  const employmentType = document.getElementById('employment-type');
+  const companyLabel = document.querySelector('label[for="company"]');
+  const roleLabel = document.querySelector('label[for="role"]');
+  const startDateLabel = document.querySelector('label[for="emp-start-date"]');
+  const companyInput = document.getElementById('company');
+  const roleInput = document.getElementById('role');
+  const startDateInput = document.getElementById('emp-start-date');
+  const noEmployerTypes = ['unemployed', 'retired', 'student'];
   if (employmentType && companyLabel && roleLabel && startDateLabel) {
     function toggleEmployerFields() {
-      var hideEmployer = noEmployerTypes.indexOf(employmentType.value) !== -1;
+      const hideEmployer = noEmployerTypes.indexOf(employmentType.value) !== -1;
       companyLabel.hidden = hideEmployer;
       roleLabel.hidden = hideEmployer;
       startDateLabel.hidden = hideEmployer;
@@ -130,14 +130,72 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleEmployerFields();
   }
 
+  // Add previous address entries
+  let prevAddressCounter = 0;
+  const btnAddPrevAddress = document.getElementById('btn-add-prev-address');
+  const prevAddressesContainer = document.getElementById('prev-addresses-container');
+  const prevAddressTemplate = document.getElementById('prev-address-template');
+  if (btnAddPrevAddress && prevAddressesContainer && prevAddressTemplate) {
+    btnAddPrevAddress.addEventListener('click', function () {
+      const idx = prevAddressCounter++;
+      const clone = prevAddressTemplate.content.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(function (el) {
+        el.id = el.id.replace(/__INDEX__/g, idx);
+      });
+      clone.querySelectorAll('[for]').forEach(function (el) {
+        el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
+      });
+      clone.querySelectorAll('[name]').forEach(function (el) {
+        el.name = el.name.replace(/__INDEX__/g, idx);
+      });
+      const entry = clone.querySelector('fieldset');
+      const removeBtn = clone.querySelector('.btn-remove-prev-address');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function () {
+          entry.remove();
+        });
+      }
+      prevAddressesContainer.appendChild(clone);
+    });
+  }
+
+  // Add previous employment entries
+  let prevEmploymentCounter = 0;
+  const btnAddPrevEmployment = document.getElementById('btn-add-prev-employment');
+  const prevEmploymentsContainer = document.getElementById('prev-employments-container');
+  const prevEmploymentTemplate = document.getElementById('prev-employment-template');
+  if (btnAddPrevEmployment && prevEmploymentsContainer && prevEmploymentTemplate) {
+    btnAddPrevEmployment.addEventListener('click', function () {
+      const idx = prevEmploymentCounter++;
+      const clone = prevEmploymentTemplate.content.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(function (el) {
+        el.id = el.id.replace(/__INDEX__/g, idx);
+      });
+      clone.querySelectorAll('[for]').forEach(function (el) {
+        el.setAttribute('for', el.getAttribute('for').replace(/__INDEX__/g, idx));
+      });
+      clone.querySelectorAll('[name]').forEach(function (el) {
+        el.name = el.name.replace(/__INDEX__/g, idx);
+      });
+      const entry = clone.querySelector('fieldset');
+      const removeBtn = clone.querySelector('.btn-remove-prev-employment');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function () {
+          entry.remove();
+        });
+      }
+      prevEmploymentsContainer.appendChild(clone);
+    });
+  }
+
   // Form submit: validate all steps
-  var form = document.getElementById('rent-application');
+  const form = document.getElementById('rent-application');
   if (form) {
     form.addEventListener('submit', function (event) {
-      var requiredFields = form.querySelectorAll('[required]');
-      var hasError = false;
-      var firstInvalid = null;
-      var firstInvalidStep = null;
+      const requiredFields = form.querySelectorAll('[required]');
+      let hasError = false;
+      let firstInvalid = null;
+      let firstInvalidStep = null;
 
       requiredFields.forEach(function (field) {
         if (!field.value || field.value.trim() === '') {
@@ -145,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
           hasError = true;
           if (!firstInvalid) {
             firstInvalid = field;
-            var stepEl = field.closest('.form-step');
+            const stepEl = field.closest('.form-step');
             if (stepEl) {
               firstInvalidStep = parseInt(stepEl.getAttribute('data-step'), 10);
             }
@@ -168,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Clear aria-invalid as user corrects fields
     form.addEventListener('input', function (event) {
-      var field = event.target;
+      const field = event.target;
       if (field.hasAttribute('required') && field.value && field.value.trim() !== '') {
         field.setAttribute('aria-invalid', 'false');
       }
