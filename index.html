@@ -7,10 +7,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
     <style>
-      abbr[title="required"] { color: var(--pico-del-color); text-decoration: none; }
-      .info-icon { font-size: 1rem; }
-      #step-indicator { color: var(--pico-muted-color); font-size: 0.875rem; margin-bottom: 0.5rem; }
-      .form-step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+      abbr[title="required"] {
+        color: var(--pico-del-color);
+        text-decoration: none;
+      }
+      .info-icon {
+        font-size: 1rem;
+      }
+      #step-indicator {
+        color: var(--pico-muted-color);
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
     </style>
   </head>
   <body>
@@ -23,8 +31,74 @@
       <form id="rent-application" action="https://formspree.io/f/xgopozbe" method="POST" enctype="multipart/form-data">
         <p id="step-indicator">Step 1 of 7</p>
 
-        <!-- Step 1: Personal details -->
+        <!-- Step 1: Application details -->
         <section class="form-step" data-step="1">
+          <h2>Application</h2>
+          <h3>Lease</h3>
+          <fieldset class="grid">
+            <label for="lease-term"
+              >Lease Term <abbr title="required">*</abbr>
+              <select id="lease-term" name="lease_term" aria-label="Lease Term" required aria-required="true">
+                <option selected value="12">12 months</option>
+              </select>
+            </label>
+            <label for="lease-commencement-date"
+              >Lease commencement date <abbr title="required">*</abbr>
+              <input
+                type="date"
+                id="lease-commencement-date"
+                name="lease_commencement_date"
+                required
+                aria-required="true"
+              />
+            </label>
+          </fieldset>
+
+          <fieldset class="grid">
+            <label for="payment-method"
+              >Prefered payment method <abbr title="required">*</abbr>
+              <select
+                id="payment-method"
+                name="payment_method"
+                aria-label="Payment method"
+                required
+                aria-required="true"
+              >
+                <option value="fortnightly">Fortnightly</option>
+                <option selected value="monthly">Monthly</option>
+              </select>
+            </label>
+
+            <label for="bond"
+              >How do you want to lodge bond <abbr title="required">*</abbr>
+              <select id="bond" name="bond" aria-label="Bond" required aria-required="true">
+                <option selected value="rbo">Directly online via RBO</option>
+                <option value="landlord">Via landlord</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <article>
+            <span class="info-icon">&#9432;</span>
+            Tell us a little about yourself — your lifestyle, why you're moving, and anything else that might help your
+            application stand out.
+          </article>
+
+          <label for="about-me"
+            >About Me:
+            <textarea
+              id="about-me"
+              name="about_me"
+              maxlength="3000"
+              rows="5"
+              placeholder="Write something about yourself..."
+            ></textarea>
+            <small><span id="about-me-count">0</span>/3000</small>
+          </label>
+        </section>
+
+        <!-- Step 2: Personal details -->
+        <section class="form-step" data-step="2" hidden>
           <h2>Personal</h2>
           <h3>Personal details</h3>
           <fieldset class="grid">
@@ -62,7 +136,15 @@
           <fieldset class="grid">
             <label for="phone"
               >Phone <abbr title="required">*</abbr>
-              <input type="tel" id="phone" name="phone" placeholder="e.g. 0412 345 678" autocomplete="tel" required aria-required="true" />
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="e.g. 0412 345 678"
+                autocomplete="tel"
+                required
+                aria-required="true"
+              />
             </label>
 
             <label for="email"
@@ -79,24 +161,14 @@
             </label>
           </fieldset>
 
-          <article>
-            <span class="info-icon">&#9432;</span>
-            Tell us a little about yourself — your lifestyle, why you're moving, and anything else that might help
-            your application stand out.
-          </article>
-
-          <textarea
-            id="about-me"
-            name="about_me"
-            maxlength="3000"
-            rows="5"
-            placeholder="Write something about yourself..."
-          ></textarea>
-          <small><span id="about-me-count">0</span>/3000</small>
+          <label for="poi"
+            >Proof of identity
+            <input type="file" id="poi" name="poi" accept=".doc, .jpg, .jpeg, .pdf, .png" multiple />
+          </label>
         </section>
 
-        <!-- Step 2: Address history -->
-        <section class="form-step" data-step="2" hidden>
+        <!-- Step 3: Address history -->
+        <section class="form-step" data-step="3" hidden>
           <h2>Personal</h2>
           <h3>Address history</h3>
           <h4>Current address</h4>
@@ -151,20 +223,41 @@
               <legend>Previous address</legend>
               <label for="prev-address-street-__INDEX__"
                 >Street address
-                <input type="text" id="prev-address-street-__INDEX__" name="prev_address[__INDEX__][street]" placeholder="Street address" />
+                <input
+                  type="text"
+                  id="prev-address-street-__INDEX__"
+                  name="prev_address[__INDEX__][street]"
+                  placeholder="Street address"
+                />
               </label>
               <fieldset class="grid">
                 <label for="prev-address-suburb-__INDEX__"
                   >Suburb
-                  <input type="text" id="prev-address-suburb-__INDEX__" name="prev_address[__INDEX__][suburb]" placeholder="Suburb" />
+                  <input
+                    type="text"
+                    id="prev-address-suburb-__INDEX__"
+                    name="prev_address[__INDEX__][suburb]"
+                    placeholder="Suburb"
+                  />
                 </label>
                 <label for="prev-address-postcode-__INDEX__"
                   >Postcode
-                  <input type="text" id="prev-address-postcode-__INDEX__" name="prev_address[__INDEX__][postcode]" placeholder="0000" maxlength="4" pattern="\d{4}" />
+                  <input
+                    type="text"
+                    id="prev-address-postcode-__INDEX__"
+                    name="prev_address[__INDEX__][postcode]"
+                    placeholder="0000"
+                    maxlength="4"
+                    pattern="\d{4}"
+                  />
                 </label>
                 <label for="prev-address-state-__INDEX__"
                   >State
-                  <select id="prev-address-state-__INDEX__" name="prev_address[__INDEX__][state]" aria-label="Select state">
+                  <select
+                    id="prev-address-state-__INDEX__"
+                    name="prev_address[__INDEX__][state]"
+                    aria-label="Select state"
+                  >
                     <option selected disabled value="">Select state</option>
                     <option value="ACT">ACT</option>
                     <option value="NSW">NSW</option>
@@ -192,8 +285,8 @@
           </template>
         </section>
 
-        <!-- Step 3: Employment -->
-        <section class="form-step" data-step="3" hidden>
+        <!-- Step 4: Employment -->
+        <section class="form-step" data-step="4" hidden>
           <h2>Personal</h2>
           <h3>Employment</h3>
           <article>
@@ -234,14 +327,20 @@
 
           <div id="prev-employments-container"></div>
 
-          <button type="button" id="btn-add-prev-employment" class="secondary outline">Add previous employment...</button>
+          <button type="button" id="btn-add-prev-employment" class="secondary outline">
+            Add previous employment...
+          </button>
 
           <template id="prev-employment-template">
             <fieldset>
               <legend>Previous employment</legend>
               <label for="prev-employment-type-__INDEX__"
                 >Employment type
-                <select id="prev-employment-type-__INDEX__" name="prev_employment[__INDEX__][type]" aria-label="Select type">
+                <select
+                  id="prev-employment-type-__INDEX__"
+                  name="prev_employment[__INDEX__][type]"
+                  aria-label="Select type"
+                >
                   <option selected disabled value="">Select type</option>
                   <option value="full-time">Full-time</option>
                   <option value="part-time">Part-time</option>
@@ -256,16 +355,30 @@
               </label>
               <label for="prev-employment-company-__INDEX__"
                 >Company / Employer
-                <input type="text" id="prev-employment-company-__INDEX__" name="prev_employment[__INDEX__][company]" placeholder="Company name" />
+                <input
+                  type="text"
+                  id="prev-employment-company-__INDEX__"
+                  name="prev_employment[__INDEX__][company]"
+                  placeholder="Company name"
+                />
               </label>
               <label for="prev-employment-role-__INDEX__"
                 >Role / Title
-                <input type="text" id="prev-employment-role-__INDEX__" name="prev_employment[__INDEX__][role]" placeholder="Job title" />
+                <input
+                  type="text"
+                  id="prev-employment-role-__INDEX__"
+                  name="prev_employment[__INDEX__][role]"
+                  placeholder="Job title"
+                />
               </label>
               <fieldset class="grid">
                 <label for="prev-employment-start-__INDEX__"
                   >Start date
-                  <input type="date" id="prev-employment-start-__INDEX__" name="prev_employment[__INDEX__][start_date]" />
+                  <input
+                    type="date"
+                    id="prev-employment-start-__INDEX__"
+                    name="prev_employment[__INDEX__][start_date]"
+                  />
                 </label>
                 <label for="prev-employment-end-__INDEX__"
                   >End date
@@ -305,8 +418,8 @@
           </label>
         </section>
 
-        <!-- Step 4: Finances -->
-        <section class="form-step" data-step="4" hidden>
+        <!-- Step 5: Finances -->
+        <section class="form-step" data-step="5" hidden>
           <h2>Personal</h2>
           <h3>Finances</h3>
           <h4>Income sources</h4>
@@ -335,13 +448,20 @@
           </label>
         </section>
 
-        <!-- Step 5: Emergency contact -->
-        <section class="form-step" data-step="5" hidden>
+        <!-- Step 6: Emergency contact -->
+        <section class="form-step" data-step="6" hidden>
           <h2>Personal</h2>
           <h3>Emergency contact</h3>
           <label for="ec-name"
             >Full name <abbr title="required">*</abbr>
-            <input type="text" id="ec-name" name="ec_name" placeholder="Emergency contact name" required aria-required="true" />
+            <input
+              type="text"
+              id="ec-name"
+              name="ec_name"
+              placeholder="Emergency contact name"
+              required
+              aria-required="true"
+            />
           </label>
 
           <label for="ec-relationship"
@@ -360,7 +480,14 @@
           <fieldset class="grid">
             <label for="ec-mobile"
               >Mobile <abbr title="required">*</abbr>
-              <input type="tel" id="ec-mobile" name="ec_mobile" placeholder="e.g. 0412 345 678" required aria-required="true" />
+              <input
+                type="tel"
+                id="ec-mobile"
+                name="ec_mobile"
+                placeholder="e.g. 0412 345 678"
+                required
+                aria-required="true"
+              />
             </label>
 
             <label for="ec-email"
@@ -370,8 +497,8 @@
           </fieldset>
         </section>
 
-        <!-- Step 6: People -->
-        <section class="form-step" data-step="6" hidden>
+        <!-- Step 7: People -->
+        <section class="form-step" data-step="7" hidden>
           <h2>Household</h2>
           <h3>People</h3>
           <article>Will anyone else be living with you?</article>
@@ -392,27 +519,25 @@
           </label>
 
           <h3>Pets</h3>
-          <label for="pets-dogs"
-            >Dogs
-            <input type="number" id="pets-dogs" name="pets_dogs" min="0" value="0" required aria-required="true" />
+          <label for="pets-number"
+            >Number of pets
+            <input type="number" id="pets-number" name="pets_number" min="0" value="0" required aria-required="true" />
           </label>
-          <label for="pets-cats"
-            >Cats
-            <input type="number" id="pets-cats" name="pets_cats" min="0" value="0" required aria-required="true" />
+          <label for="pets-breed"
+            >Breed
+            <input type="text" id="pets-breed" name="pets_breed" />
           </label>
-          <label for="pets-other"
-            >Other pets
-            <input type="number" id="pets-other" name="pets_other" min="0" value="0" required aria-required="true" />
+          <label for="pets-age"
+            >Age
+            <input type="text" id="pets-age" name="pets_age" />
           </label>
         </section>
 
         <!-- Navigation -->
-        <section class="form-step-nav">
+        <section class="grid">
           <button type="button" id="btn-back" role="button" class="secondary" hidden>Back</button>
-          <div>
-            <button type="button" id="btn-next">Next</button>
-            <button type="submit" id="btn-submit" form="rent-application" hidden>Submit application</button>
-          </div>
+          <button type="button" id="btn-next">Next</button>
+          <button type="submit" id="btn-submit" form="rent-application" hidden>Submit application</button>
         </section>
       </form>
     </main>
