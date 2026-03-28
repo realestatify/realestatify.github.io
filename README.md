@@ -4,7 +4,7 @@ A single-page static rent application form. No build step, no server required �
 
 ## Usage
 
-Open `index.html` directly in any modern browser. The form collects applicant details across collapsible sections (Personal and Household) and submits via your default email client.
+Open `index.html` directly in any modern browser. The form collects applicant details across a 7-step wizard and submits via your default email client.
 
 ## Configuring the recipient email address
 
@@ -32,4 +32,4 @@ No data is sent to any server. File upload fields (photo ID, supporting document
 
 - `index.html` — the form markup
 - `style.css` — visual overrides on top of PicoCSS
-- `app.js` — accordion widgets, character counter, pet/toggle selectors, and mailto submission
+- `app.js` — multi-step wizard navigation, character counter, pet/toggle selectors, and mailto submission

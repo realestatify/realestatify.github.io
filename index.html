@@ -9,6 +9,9 @@
     <style>
       abbr[title="required"] { color: var(--pico-del-color); text-decoration: none; }
       .info-icon { font-size: 1rem; }
+      #step-indicator { color: var(--pico-muted-color); font-size: 0.875rem; margin-bottom: 0.5rem; }
+      .step-section-label { color: var(--pico-muted-color); font-size: 0.875rem; margin-bottom: 0.25rem; }
+      .form-step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
     </style>
   </head>
   <body>
@@ -19,309 +22,305 @@
     </header>
     <main class="container">
       <form id="rent-application">
-        <!-- ===== PERSONAL SECTION ===== -->
-        <section>
+        <p id="step-indicator">Step 1 of 7</p>
+
+        <!-- Step 1: Personal details -->
+        <section class="form-step" data-step="1">
           <h2>Personal</h2>
-
-          <details id="personal-details" open>
-            <summary><h3>Personal details</h3></summary>
-            <fieldset class="grid">
-              <label for="first-name"
-                >First name <abbr title="required">*</abbr>
-                <input
-                  type="text"
-                  id="first-name"
-                  name="first_name"
-                  placeholder="First name"
-                  autocomplete="given-name"
-                  required
-                  aria-required="true"
-                />
-              </label>
-              <label for="last-name"
-                >Last name <abbr title="required">*</abbr>
-                <input
-                  type="text"
-                  id="last-name"
-                  name="last_name"
-                  placeholder="Last name"
-                  autocomplete="family-name"
-                  required
-                  aria-required="true"
-                />
-              </label>
-            </fieldset>
-
-            <label for="dob"
-              >Date of birth <abbr title="required">*</abbr>
-              <input type="date" id="dob" name="dob" required aria-required="true" />
-            </label>
-
-            <fieldset class="grid">
-              <label for="phone"
-                >Phone <abbr title="required">*</abbr>
-                <input type="tel" id="phone" name="phone" placeholder="e.g. 0412 345 678" autocomplete="tel" required aria-required="true" />
-              </label>
-
-              <label for="email"
-                >Email <abbr title="required">*</abbr>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  autocomplete="email"
-                  required
-                  aria-required="true"
-                />
-              </label>
-            </fieldset>
-
-            <article>
-              <span class="info-icon">&#9432;</span>
-              Tell us a little about yourself — your lifestyle, why you're moving, and anything else that might help
-              your application stand out.
-            </article>
-
-            <textarea
-              id="about-me"
-              name="about_me"
-              maxlength="3000"
-              rows="5"
-              placeholder="Write something about yourself..."
-            ></textarea>
-            <small><span id="about-me-count">0</span>/3000</small>
-          </details>
-
-          <hr />
-
-          <details id="address-history">
-            <summary><h3>Address history</h3></summary>
-            <h4>Current address</h4>
-
-            <label for="street-address"
-              >Street address
+          <h3>Personal details</h3>
+          <fieldset class="grid">
+            <label for="first-name"
+              >First name <abbr title="required">*</abbr>
               <input
                 type="text"
-                id="street-address"
-                name="street_address"
-                placeholder="Street address"
-                autocomplete="street-address"
+                id="first-name"
+                name="first_name"
+                placeholder="First name"
+                autocomplete="given-name"
+                required
+                aria-required="true"
               />
             </label>
-
-            <fieldset class="grid">
-              <label for="suburb"
-                >Suburb
-                <input type="text" id="suburb" name="suburb" placeholder="Suburb" />
-              </label>
-              <label for="postcode"
-                >Postcode
-                <input type="text" id="postcode" name="postcode" placeholder="0000" maxlength="4" pattern="\d{4}" />
-              </label>
-              <label for="state"
-                >State
-                <select id="state" name="state" aria-label="Select state">
-                  <option selected disabled value="">Select state</option>
-                  <option value="ACT">ACT</option>
-                  <option value="NSW">NSW</option>
-                  <option value="NT">NT</option>
-                  <option value="QLD">QLD</option>
-                  <option value="SA">SA</option>
-                  <option value="TAS">TAS</option>
-                  <option value="VIC">VIC</option>
-                  <option value="WA">WA</option>
-                </select>
-              </label>
-            </fieldset>
-
-            <label for="movein"
-              >Move-in date
-              <input type="date" id="movein" name="movein" />
+            <label for="last-name"
+              >Last name <abbr title="required">*</abbr>
+              <input
+                type="text"
+                id="last-name"
+                name="last_name"
+                placeholder="Last name"
+                autocomplete="family-name"
+                required
+                aria-required="true"
+              />
             </label>
-          </details>
+          </fieldset>
 
-          <hr />
+          <label for="dob"
+            >Date of birth <abbr title="required">*</abbr>
+            <input type="date" id="dob" name="dob" required aria-required="true" />
+          </label>
 
-          <details id="employment">
-            <summary><h3>Employment</h3></summary>
-            <article>
-              <span>&#9432;</span>
-              Provide your current employment details. This helps us verify your ability to meet rental payments.
-            </article>
+          <fieldset class="grid">
+            <label for="phone"
+              >Phone <abbr title="required">*</abbr>
+              <input type="tel" id="phone" name="phone" placeholder="e.g. 0412 345 678" autocomplete="tel" required aria-required="true" />
+            </label>
 
-            <label for="employment-type"
-              >Employment type
-              <select id="employment-type" name="employment_type" aria-label="Select type">
-                <option selected disabled value="">Select type</option>
-                <option value="full-time">Full-time</option>
-                <option value="part-time">Part-time</option>
-                <option value="casual">Casual</option>
-                <option value="self-employed">Self-employed</option>
-                <option value="contractor">Contractor</option>
-                <option value="retired">Retired</option>
-                <option value="student">Student</option>
-                <option value="unemployed">Unemployed</option>
-                <option value="other">Other</option>
+            <label for="email"
+              >Email <abbr title="required">*</abbr>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+                aria-required="true"
+              />
+            </label>
+          </fieldset>
+
+          <article>
+            <span class="info-icon">&#9432;</span>
+            Tell us a little about yourself — your lifestyle, why you're moving, and anything else that might help
+            your application stand out.
+          </article>
+
+          <textarea
+            id="about-me"
+            name="about_me"
+            maxlength="3000"
+            rows="5"
+            placeholder="Write something about yourself..."
+          ></textarea>
+          <small><span id="about-me-count">0</span>/3000</small>
+        </section>
+
+        <!-- Step 2: Address history -->
+        <section class="form-step" data-step="2" hidden>
+          <h2>Personal</h2>
+          <h3>Address history</h3>
+          <h4>Current address</h4>
+
+          <label for="street-address"
+            >Street address
+            <input
+              type="text"
+              id="street-address"
+              name="street_address"
+              placeholder="Street address"
+              autocomplete="street-address"
+            />
+          </label>
+
+          <fieldset class="grid">
+            <label for="suburb"
+              >Suburb
+              <input type="text" id="suburb" name="suburb" placeholder="Suburb" />
+            </label>
+            <label for="postcode"
+              >Postcode
+              <input type="text" id="postcode" name="postcode" placeholder="0000" maxlength="4" pattern="\d{4}" />
+            </label>
+            <label for="state"
+              >State
+              <select id="state" name="state" aria-label="Select state">
+                <option selected disabled value="">Select state</option>
+                <option value="ACT">ACT</option>
+                <option value="NSW">NSW</option>
+                <option value="NT">NT</option>
+                <option value="QLD">QLD</option>
+                <option value="SA">SA</option>
+                <option value="TAS">TAS</option>
+                <option value="VIC">VIC</option>
+                <option value="WA">WA</option>
               </select>
             </label>
+          </fieldset>
 
-            <label for="company"
-              >Company / Employer
-              <input type="text" id="company" name="company" placeholder="Company name" />
+          <label for="movein"
+            >Move-in date
+            <input type="date" id="movein" name="movein" />
+          </label>
+        </section>
+
+        <!-- Step 3: Employment -->
+        <section class="form-step" data-step="3" hidden>
+          <h2>Personal</h2>
+          <h3>Employment</h3>
+          <article>
+            <span>&#9432;</span>
+            Provide your current employment details. This helps us verify your ability to meet rental payments.
+          </article>
+
+          <label for="employment-type"
+            >Employment type
+            <select id="employment-type" name="employment_type" aria-label="Select type">
+              <option selected disabled value="">Select type</option>
+              <option value="full-time">Full-time</option>
+              <option value="part-time">Part-time</option>
+              <option value="casual">Casual</option>
+              <option value="self-employed">Self-employed</option>
+              <option value="contractor">Contractor</option>
+              <option value="retired">Retired</option>
+              <option value="student">Student</option>
+              <option value="unemployed">Unemployed</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label for="company"
+            >Company / Employer
+            <input type="text" id="company" name="company" placeholder="Company name" />
+          </label>
+
+          <label for="role"
+            >Role / Title
+            <input type="text" id="role" name="role" placeholder="Job title" />
+          </label>
+
+          <label for="emp-start-date"
+            >Start date
+            <input type="date" id="emp-start-date" name="emp_start_date" />
+          </label>
+
+          <h4>Employment reference</h4>
+
+          <label for="ref-type"
+            >Reference type
+            <select id="ref-type" name="ref_type" aria-label="Select type">
+              <option selected disabled value="">Select type</option>
+              <option value="employer">Employer / Manager</option>
+              <option value="hr">HR department</option>
+              <option value="colleague">Colleague</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label for="ref-name"
+            >Full name
+            <input type="text" id="ref-name" name="ref_name" placeholder="Reference full name" />
+          </label>
+
+          <label for="ref-email"
+            >Email
+            <input type="email" id="ref-email" name="ref_email" placeholder="reference@example.com" />
+          </label>
+
+          <label for="ref-phone"
+            >Phone
+            <input type="tel" id="ref-phone" name="ref_phone" placeholder="e.g. 0412 345 678" />
+          </label>
+        </section>
+
+        <!-- Step 4: Finances -->
+        <section class="form-step" data-step="4" hidden>
+          <h2>Personal</h2>
+          <h3>Finances</h3>
+          <h4>Income sources</h4>
+
+          <label for="income-type"
+            >Income type
+            <select id="income-type" name="income_type" aria-label="Select type">
+              <option selected disabled value="">Select type</option>
+              <option value="salary">Salary / Wages</option>
+              <option value="self-employed">Self-employed</option>
+              <option value="centrelink">Centrelink / Government benefits</option>
+              <option value="rental">Rental income</option>
+              <option value="investments">Investments</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label for="income-amount"
+            >Income amount (per week)
+            <input type="number" id="income-amount" name="income_amount" placeholder="0.00" min="0" step="0.01" />
+          </label>
+
+          <label for="no-income">
+            <input type="checkbox" id="no-income" name="no_income" />
+            I have no income
+          </label>
+        </section>
+
+        <!-- Step 5: Emergency contact -->
+        <section class="form-step" data-step="5" hidden>
+          <h2>Personal</h2>
+          <h3>Emergency contact</h3>
+          <label for="ec-name"
+            >Full name <abbr title="required">*</abbr>
+            <input type="text" id="ec-name" name="ec_name" placeholder="Emergency contact name" required aria-required="true" />
+          </label>
+
+          <label for="ec-relationship"
+            >Relationship
+            <select id="ec-relationship" name="ec_relationship" aria-label="Select relationship">
+              <option selected disabled value="">Select relationship</option>
+              <option value="parent">Parent</option>
+              <option value="sibling">Sibling</option>
+              <option value="partner">Partner / Spouse</option>
+              <option value="friend">Friend</option>
+              <option value="colleague">Colleague</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <fieldset class="grid">
+            <label for="ec-mobile"
+              >Mobile <abbr title="required">*</abbr>
+              <input type="tel" id="ec-mobile" name="ec_mobile" placeholder="e.g. 0412 345 678" required aria-required="true" />
             </label>
 
-            <label for="role"
-              >Role / Title
-              <input type="text" id="role" name="role" placeholder="Job title" />
-            </label>
-
-            <label for="emp-start-date"
-              >Start date
-              <input type="date" id="emp-start-date" name="emp_start_date" />
-            </label>
-
-            <h4>Employment reference</h4>
-
-            <label for="ref-type"
-              >Reference type
-              <select id="ref-type" name="ref_type" aria-label="Select type">
-                <option selected disabled value="">Select type</option>
-                <option value="employer">Employer / Manager</option>
-                <option value="hr">HR department</option>
-                <option value="colleague">Colleague</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-
-            <label for="ref-name"
-              >Full name
-              <input type="text" id="ref-name" name="ref_name" placeholder="Reference full name" />
-            </label>
-
-            <label for="ref-email"
+            <label for="ec-email"
               >Email
-              <input type="email" id="ref-email" name="ref_email" placeholder="reference@example.com" />
+              <input type="email" id="ec-email" name="ec_email" placeholder="emergency@example.com" />
             </label>
-
-            <label for="ref-phone"
-              >Phone
-              <input type="tel" id="ref-phone" name="ref_phone" placeholder="e.g. 0412 345 678" />
-            </label>
-          </details>
-
-          <hr />
-
-          <details id="finances">
-            <summary><h3>Finances</h3></summary>
-            <h4>Income sources</h4>
-
-            <label for="income-type"
-              >Income type
-              <select id="income-type" name="income_type" aria-label="Select type">
-                <option selected disabled value="">Select type</option>
-                <option value="salary">Salary / Wages</option>
-                <option value="self-employed">Self-employed</option>
-                <option value="centrelink">Centrelink / Government benefits</option>
-                <option value="rental">Rental income</option>
-                <option value="investments">Investments</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-
-            <label for="income-amount"
-              >Income amount (per week)
-              <input type="number" id="income-amount" name="income_amount" placeholder="0.00" min="0" step="0.01" />
-            </label>
-
-            <label for="no-income">
-              <input type="checkbox" id="no-income" name="no_income" />
-              I have no income
-            </label>
-          </details>
-
-          <hr />
-
-          <details id="emergency-contact">
-            <summary><h3>Emergency contact</h3></summary>
-            <label for="ec-name"
-              >Full name <abbr title="required">*</abbr>
-              <input type="text" id="ec-name" name="ec_name" placeholder="Emergency contact name" required aria-required="true" />
-            </label>
-
-            <label for="ec-relationship"
-              >Relationship
-              <select id="ec-relationship" name="ec_relationship" aria-label="Select relationship">
-                <option selected disabled value="">Select relationship</option>
-                <option value="parent">Parent</option>
-                <option value="sibling">Sibling</option>
-                <option value="partner">Partner / Spouse</option>
-                <option value="friend">Friend</option>
-                <option value="colleague">Colleague</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-
-            <fieldset class="grid">
-              <label for="ec-mobile"
-                >Mobile <abbr title="required">*</abbr>
-                <input type="tel" id="ec-mobile" name="ec_mobile" placeholder="e.g. 0412 345 678" required aria-required="true" />
-              </label>
-
-              <label for="ec-email"
-                >Email
-                <input type="email" id="ec-email" name="ec_email" placeholder="emergency@example.com" />
-              </label>
-            </fieldset>
-          </details>
+          </fieldset>
         </section>
 
-        <!-- ===== HOUSEHOLD SECTION ===== -->
-        <section>
+        <!-- Step 6: People -->
+        <section class="form-step" data-step="6" hidden>
           <h2>Household</h2>
+          <h3>People</h3>
+          <article>Will anyone else be living with you?</article>
+          <h4>Additional occupant</h4>
+          <fieldset class="grid">
+            <label for="occupant-first-name"
+              >First name
+              <input type="text" id="occupant-first-name" name="occupant_first_name" placeholder="First name" />
+            </label>
+            <label for="occupant-last-name"
+              >Last name
+              <input type="text" id="occupant-last-name" name="occupant_last_name" placeholder="Last name" />
+            </label>
+          </fieldset>
+          <label for="no-ex-occupant">
+            <input type="checkbox" id="no-ex-occupant" name="no_ex_occupant" />
+            I'll be the only occupant
+          </label>
 
-          <details id="people">
-            <summary><h3>People</h3></summary>
-            <article>Will anyone else be living with you?</article>
-            <h4>Additional occupant</h4>
-            <fieldset class="grid">
-              <label for="occupant-first-name"
-                >First name
-                <input type="text" id="occupant-first-name" name="occupant_first_name" placeholder="First name" />
-              </label>
-              <label for="occupant-last-name"
-                >Last name
-                <input type="text" id="occupant-last-name" name="occupant_last_name" placeholder="Last name" />
-              </label>
-            </fieldset>
-            <label for="no-ex-occupant">
-              <input type="checkbox" id="no-ex-occupant" name="no_ex_occupant" />
-              I'll be the only occupant
-            </label>
-          </details>
-
-          <hr />
-
-          <details id="pets">
-            <summary><h3>Pets</h3></summary>
-            <label for="pets-dogs"
-              >Dogs
-              <input type="number" id="pets-dogs" name="pets_dogs" min="0" value="0" required aria-required="true" />
-            </label>
-            <label for="pets-cats"
-              >Cats
-              <input type="number" id="pets-cats" name="pets_cats" min="0" value="0" required aria-required="true" />
-            </label>
-            <label for="pets-other"
-              >Other pets
-              <input type="number" id="pets-other" name="pets_other" min="0" value="0" required aria-required="true" />
-            </label>
-          </details>
+          <h3>Pets</h3>
+          <label for="pets-dogs"
+            >Dogs
+            <input type="number" id="pets-dogs" name="pets_dogs" min="0" value="0" required aria-required="true" />
+          </label>
+          <label for="pets-cats"
+            >Cats
+            <input type="number" id="pets-cats" name="pets_cats" min="0" value="0" required aria-required="true" />
+          </label>
+          <label for="pets-other"
+            >Other pets
+            <input type="number" id="pets-other" name="pets_other" min="0" value="0" required aria-required="true" />
+          </label>
         </section>
 
-        <!-- ===== SUBMISSION ===== -->
-        <section>
-          <button type="submit" form="rent-application">Submit application</button>
+        <!-- Navigation -->
+        <section class="form-step-nav">
+          <button type="button" id="btn-back" role="button" class="secondary" hidden>Back</button>
+          <div>
+            <button type="button" id="btn-next">Next</button>
+            <button type="submit" id="btn-submit" form="rent-application" hidden>Submit application</button>
+          </div>
         </section>
       </form>
     </main>
