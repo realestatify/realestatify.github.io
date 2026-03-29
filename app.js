@@ -127,12 +127,24 @@ document.addEventListener("DOMContentLoaded", () => {
   showStep(initialStep, { skipPush: true });
 
   // Handle browser back / forward buttons
-  window.addEventListener("popstate", event => {
+  window.addEventListener("popstate", (event) => {
     const step = event.state && event.state.step;
     if (step >= 1 && step <= TOTAL_STEPS) {
       showStep(step, { skipPush: true });
     }
   });
+
+  const leaseCommencementDate = document.getElementById("lease-commencement-date");
+  const dob = document.getElementById("dob");
+  const movein = document.getElementById("movein");
+
+  if (leaseCommencementDate && dob && movein) {
+    const now = new Date();
+
+    leaseCommencementDate.min = now.toISOString().split("T")[0];
+    dob.max = (now.getFullYear() - 10).toString() + "-01-01";
+    movein.max = now.toISOString().split("T")[0];
+  }
 
   // Character counter for about-me textarea
   const aboutMe = document.getElementById("about-me");

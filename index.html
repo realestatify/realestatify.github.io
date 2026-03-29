@@ -137,7 +137,7 @@
 
           <label for="dob"
             >Date of birth <abbr title="required">*</abbr>
-            <input type="date" id="dob" name="dob" required aria-required="true" />
+            <input type="date" id="dob" name="dob" min="1900-01-01" max="2023-01-01" required aria-required="true" />
           </label>
 
           <fieldset class="grid">
@@ -219,7 +219,7 @@
 
             <label for="movein"
               >Move-in date
-              <input type="date" id="movein" name="movein" />
+              <input type="date" id="movein" name="movein" min="1900-01-01" />
             </label>
           </article>
 
@@ -282,11 +282,21 @@
               <fieldset class="grid">
                 <label for="prev-address-movein-__INDEX__"
                   >Move-in date
-                  <input type="date" id="prev-address-movein-__INDEX__" name="prev_address[__INDEX__][movein]" />
+                  <input
+                    type="date"
+                    id="prev-address-movein-__INDEX__"
+                    name="prev_address[__INDEX__][movein]"
+                    min="1900-01-01"
+                  />
                 </label>
                 <label for="prev-address-moveout-__INDEX__"
                   >Move-out date
-                  <input type="date" id="prev-address-moveout-__INDEX__" name="prev_address[__INDEX__][moveout]" />
+                  <input
+                    type="date"
+                    id="prev-address-moveout-__INDEX__"
+                    name="prev_address[__INDEX__][moveout]"
+                    min="1900-01-01"
+                  />
                 </label>
               </fieldset>
               <button type="button" class="secondary outline btn-remove-prev-address">Remove</button>
@@ -299,7 +309,7 @@
           <h2>Personal</h2>
           <h3>Employment</h3>
           <article>
-            <span>&#9432;</span>
+            <span class="info-icon">&#9432;</span>
             Provide your current employment details. This helps us verify your ability to meet rental payments.
           </article>
 
@@ -365,6 +375,7 @@
                     type="date"
                     id="employment-start-__INDEX__"
                     name="employment[__INDEX__][start_date]"
+                    min="1900-01-01"
                     required
                     aria-required="true"
                   />
@@ -413,7 +424,7 @@
           <div id="incomes-container"></div>
 
           <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-income" class="secondary outline" style="vertical-align: middle">Add source of income</button>
+            <button type="button" id="btn-add-income" class="secondary outline">Add source of income</button>
             <label for="no-income">
               <input type="checkbox" id="no-income" name="no_income" role="switch" />
               I have no income
@@ -520,12 +531,15 @@
         <section class="form-step" data-step="7" hidden>
           <h2>Household</h2>
           <h3>People</h3>
-          <article><span class="info-icon">&#9432;</span>Will anyone else be living with you?</article>
+          <article>
+            <span class="info-icon">&#9432;</span>
+            Will anyone else be living with you?
+          </article>
 
           <div id="occupants-container"></div>
 
           <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-occupant" class="secondary outline" style="vertical-align: middle">Add occupant</button>
+            <button type="button" id="btn-add-occupant" class="secondary outline">Add occupant</button>
             <label for="no-ex-occupant">
               <input type="checkbox" id="no-ex-occupant" name="no_ex_occupant" role="switch" />
               I'll be the only occupant
@@ -569,6 +583,8 @@
                     id="occupant-age-__INDEX__"
                     name="occupant[__INDEX__][age]"
                     placeholder="0"
+                    min="0"
+                    step="1"
                     required
                     aria-required="true"
                   />
@@ -583,7 +599,7 @@
           <div id="pets-container"></div>
 
           <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-pet" class="secondary outline" style="vertical-align: middle">Add pets</button>
+            <button type="button" id="btn-add-pet" class="secondary outline">Add pets</button>
             <label for="no-pets">
               <input type="checkbox" id="no-pets" name="no_pets" role="switch" />
               No pets
@@ -611,6 +627,7 @@
                     type="number"
                     id="pet-age-__INDEX__"
                     name="pet[__INDEX__][age]"
+                    placeholder="0"
                     min="0"
                     step="1"
                     required
