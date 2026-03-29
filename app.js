@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       clone.querySelectorAll("[name]").forEach((el) => {
         el.name = el.name.replace(/__INDEX__/g, idx);
       });
-      const entry = clone.querySelector("fieldset");
+      const entry = clone.querySelector("article");
       const removeBtn = clone.querySelector(removeBtnSelector);
       if (removeBtn) {
         removeBtn.addEventListener("click", () => {
@@ -180,6 +180,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const occupantTemplate = document.getElementById("occupant-template");
   if (btnAddOccupant && occupantsContainer && occupantTemplate) {
     setupTemplateList(btnAddOccupant, occupantsContainer, occupantTemplate, ".btn-remove-occupant");
+  }
+
+  // no-pets checkbox: disable pet fields
+  const noPets = document.getElementById("no-pets");
+  const btnAddPet = document.getElementById("btn-add-pet");
+  const petsContainer = document.getElementById("pets-container");
+  if (noPets && btnAddPet && petsContainer) {
+    noPets.addEventListener("change", () => {
+      const disabled = noPets.checked;
+      btnAddPet.disabled = disabled;
+      btnAddPet.setAttribute("aria-disabled", String(disabled));
+      petsContainer.querySelectorAll("fieldset input").forEach((el) => {
+        el.disabled = disabled;
+        el.setAttribute("aria-disabled", String(disabled));
+      });
+    });
+  }
+
+  // Add additional pet entries
+  const petTemplate = document.getElementById("pet-template");
+  if (btnAddPet && petsContainer && petTemplate) {
+    setupTemplateList(btnAddPet, petsContainer, petTemplate, ".btn-remove-pet");
   }
 
   // Form submit: validate all steps

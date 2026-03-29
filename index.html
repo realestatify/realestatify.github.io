@@ -44,7 +44,9 @@
             <label for="lease-term"
               >Lease Term <abbr title="required">*</abbr>
               <select id="lease-term" name="lease_term" aria-label="Lease Term" required aria-required="true">
-                <option selected value="12">12 months</option>
+                <option disabled value="6">6 months</option>
+                <option selected value="12">1 year</option>
+                <option value="24">2 years</option>
               </select>
             </label>
             <label for="lease-commencement-date"
@@ -176,56 +178,58 @@
         <section class="form-step" data-step="3" hidden>
           <h2>Personal</h2>
           <h3>Address history</h3>
-          <h4>Current address</h4>
+          <article>
+            <h4>Current address</h4>
 
-          <label for="street-address"
-            >Street address
-            <input
-              type="text"
-              id="street-address"
-              name="street_address"
-              placeholder="Street address"
-              autocomplete="street-address"
-            />
-          </label>
+            <label for="street-address"
+              >Street address
+              <input
+                type="text"
+                id="street-address"
+                name="street_address"
+                placeholder="Street address"
+                autocomplete="street-address"
+              />
+            </label>
 
-          <fieldset class="grid">
-            <label for="suburb"
-              >Suburb
-              <input type="text" id="suburb" name="suburb" placeholder="Suburb" />
-            </label>
-            <label for="postcode"
-              >Postcode
-              <input type="text" id="postcode" name="postcode" placeholder="0000" maxlength="4" pattern="\d{4}" />
-            </label>
-            <label for="state"
-              >State
-              <select id="state" name="state" aria-label="Select state">
-                <option selected disabled value="">Select state</option>
-                <option value="ACT">ACT</option>
-                <option value="NSW">NSW</option>
-                <option value="NT">NT</option>
-                <option value="QLD">QLD</option>
-                <option value="SA">SA</option>
-                <option value="TAS">TAS</option>
-                <option value="VIC">VIC</option>
-                <option value="WA">WA</option>
-              </select>
-            </label>
-          </fieldset>
+            <fieldset class="grid">
+              <label for="suburb"
+                >Suburb
+                <input type="text" id="suburb" name="suburb" placeholder="Suburb" />
+              </label>
+              <label for="postcode"
+                >Postcode
+                <input type="text" id="postcode" name="postcode" placeholder="0000" maxlength="4" pattern="\d{4}" />
+              </label>
+              <label for="state"
+                >State
+                <select id="state" name="state" aria-label="Select state">
+                  <option selected disabled value="">Select state</option>
+                  <option value="ACT">ACT</option>
+                  <option value="NSW">NSW</option>
+                  <option value="NT">NT</option>
+                  <option value="QLD">QLD</option>
+                  <option value="SA">SA</option>
+                  <option value="TAS">TAS</option>
+                  <option value="VIC">VIC</option>
+                  <option value="WA">WA</option>
+                </select>
+              </label>
+            </fieldset>
 
-          <label for="movein"
-            >Move-in date
-            <input type="date" id="movein" name="movein" />
-          </label>
+            <label for="movein"
+              >Move-in date
+              <input type="date" id="movein" name="movein" />
+            </label>
+          </article>
 
           <div id="prev-addresses-container"></div>
 
           <button type="button" id="btn-add-prev-address" class="secondary outline">Add previous address...</button>
 
           <template id="prev-address-template">
-            <fieldset>
-              <legend>Previous address</legend>
+            <article>
+              <header><h4>Previous address</h4></header>
               <label for="prev-address-street-__INDEX__"
                 >Street address
                 <input
@@ -286,7 +290,7 @@
                 </label>
               </fieldset>
               <button type="button" class="secondary outline btn-remove-prev-address">Remove</button>
-            </fieldset>
+            </article>
           </template>
         </section>
 
@@ -301,17 +305,17 @@
 
           <div id="employments-container"></div>
 
-          <fieldset class="grid">
+          <fieldset class="grid" style="align-items: baseline">
             <button type="button" id="btn-add-employment" class="secondary outline">Add employment</button>
-            <label for="currently-unemployed" style="vertical-align: middle">
+            <label for="currently-unemployed">
               <input type="checkbox" id="currently-unemployed" name="currently_unemployed" role="switch" />
               Currently unemployed
             </label>
           </fieldset>
 
           <template id="employment-template">
-            <fieldset>
-              <legend>Employment</legend>
+            <article>
+              <header><h4>Employment</h4></header>
               <label for="employment-company-__INDEX__"
                 >Company / Employer <abbr title="required">*</abbr>
                 <input
@@ -367,57 +371,58 @@
                 </label>
               </fieldset>
               <button type="button" class="secondary outline btn-remove-employment">Remove</button>
-            </fieldset>
+            </article>
           </template>
 
-          <h4>Employment reference</h4>
+          <article>
+            <header><h4>Employment reference</h4></header>
 
-          <label for="ref-type"
-            >Reference type
-            <select id="ref-type" name="ref_type" aria-label="Select type">
-              <option selected disabled value="">Select type</option>
-              <option value="employer">Employer / Manager</option>
-              <option value="hr">HR department</option>
-              <option value="colleague">Colleague</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
+            <label for="ref-type"
+              >Reference type
+              <select id="ref-type" name="ref_type" aria-label="Select type">
+                <option selected disabled value="">Select type</option>
+                <option value="employer">Employer / Manager</option>
+                <option value="hr">HR department</option>
+                <option value="colleague">Colleague</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
 
-          <label for="ref-name"
-            >Full name
-            <input type="text" id="ref-name" name="ref_name" placeholder="Reference full name" />
-          </label>
+            <label for="ref-name"
+              >Full name
+              <input type="text" id="ref-name" name="ref_name" placeholder="Reference full name" />
+            </label>
 
-          <label for="ref-email"
-            >Email
-            <input type="email" id="ref-email" name="ref_email" placeholder="reference@example.com" />
-          </label>
+            <label for="ref-email"
+              >Email
+              <input type="email" id="ref-email" name="ref_email" placeholder="reference@example.com" />
+            </label>
 
-          <label for="ref-phone"
-            >Phone
-            <input type="tel" id="ref-phone" name="ref_phone" placeholder="e.g. 0412 345 678" />
-          </label>
+            <label for="ref-phone"
+              >Phone
+              <input type="tel" id="ref-phone" name="ref_phone" placeholder="e.g. 0412 345 678" />
+            </label>
+          </article>
         </section>
 
         <!-- Step 5: Finances -->
         <section class="form-step" data-step="5" hidden>
           <h2>Personal</h2>
           <h3>Finances</h3>
-          <h4>Income sources</h4>
 
           <div id="incomes-container"></div>
 
-          <fieldset class="grid">
-            <button type="button" id="btn-add-income" class="secondary outline">Add source of income</button>
-            <label for="no-income" style="vertical-align: middle">
+          <fieldset class="grid" style="align-items: baseline">
+            <button type="button" id="btn-add-income" class="secondary outline" style="vertical-align: middle">Add source of income</button>
+            <label for="no-income">
               <input type="checkbox" id="no-income" name="no_income" role="switch" />
               I have no income
             </label>
           </fieldset>
 
           <template id="income-template">
-            <fieldset>
-              <legend>Additional income source</legend>
+            <article>
+              <header><h4>Income source</h4></header>
               <fieldset class="grid">
                 <label for="income-type-__INDEX__"
                   >Income type <abbr title="required">*</abbr>
@@ -452,7 +457,7 @@
                 </label>
               </fieldset>
               <button type="button" class="secondary outline btn-remove-income">Remove</button>
-            </fieldset>
+            </article>
           </template>
         </section>
 
@@ -473,8 +478,14 @@
           </label>
 
           <label for="ec-relationship"
-            >Relationship
-            <select id="ec-relationship" name="ec_relationship" aria-label="Select relationship">
+            >Relationship <abbr title="required">*</abbr>
+            <select
+              id="ec-relationship"
+              name="ec_relationship"
+              aria-label="Select relationship"
+              required
+              aria-required="true"
+            >
               <option selected disabled value="">Select relationship</option>
               <option value="parent">Parent</option>
               <option value="sibling">Sibling</option>
@@ -509,29 +520,32 @@
         <section class="form-step" data-step="7" hidden>
           <h2>Household</h2>
           <h3>People</h3>
-          <article>Will anyone else be living with you?</article>
-          <h4>Additional occupant</h4>
+          <article><span class="info-icon">&#9432;</span>Will anyone else be living with you?</article>
 
           <div id="occupants-container"></div>
 
-          <fieldset class="grid">
-            <button type="button" id="btn-add-occupant" class="secondary outline">Add occupant</button>
-            <label for="no-ex-occupant" style="vertical-align: middle">
+          <fieldset class="grid" style="align-items: baseline">
+            <button type="button" id="btn-add-occupant" class="secondary outline" style="vertical-align: middle">Add occupant</button>
+            <label for="no-ex-occupant">
               <input type="checkbox" id="no-ex-occupant" name="no_ex_occupant" role="switch" />
               I'll be the only occupant
+            </label>
+            <label for="smoking">
+              <input type="checkbox" id="smoking" name="smoking" role="switch" />
+              Do any of the occupants smoke?
             </label>
           </fieldset>
 
           <template id="occupant-template">
-            <fieldset>
-              <legend>Additional occupant</legend>
+            <article>
+              <header><h4>Additional occupant</h4></header>
               <fieldset class="grid">
                 <label for="occupant-first-name-__INDEX__"
                   >First name <abbr title="required">*</abbr>
                   <input
                     type="text"
                     id="occupant-first-name-__INDEX__"
-                    name="additional_occupant[__INDEX__][first_name]"
+                    name="occupant[__INDEX__][first_name]"
                     placeholder="First name"
                     required
                     aria-required="true"
@@ -542,7 +556,7 @@
                   <input
                     type="text"
                     id="occupant-last-name-__INDEX__"
-                    name="additional_occupant[__INDEX__][last_name]"
+                    name="occupant[__INDEX__][last_name]"
                     placeholder="Last name"
                     required
                     aria-required="true"
@@ -553,7 +567,7 @@
                   <input
                     type="number"
                     id="occupant-age-__INDEX__"
-                    name="additional_occupant[__INDEX__][age]"
+                    name="occupant[__INDEX__][age]"
                     placeholder="0"
                     required
                     aria-required="true"
@@ -561,22 +575,52 @@
                 </label>
               </fieldset>
               <button type="button" class="secondary outline btn-remove-occupant">Remove</button>
-            </fieldset>
+            </article>
           </template>
 
           <h3>Pets</h3>
-          <label for="pets-number"
-            >Number of pets
-            <input type="number" id="pets-number" name="pets_number" min="0" value="0" required aria-required="true" />
-          </label>
-          <label for="pets-breed"
-            >Breed
-            <input type="text" id="pets-breed" name="pets_breed" />
-          </label>
-          <label for="pets-age"
-            >Age
-            <input type="text" id="pets-age" name="pets_age" />
-          </label>
+
+          <div id="pets-container"></div>
+
+          <fieldset class="grid" style="align-items: baseline">
+            <button type="button" id="btn-add-pet" class="secondary outline" style="vertical-align: middle">Add pets</button>
+            <label for="no-pets">
+              <input type="checkbox" id="no-pets" name="no_pets" role="switch" />
+              No pets
+            </label>
+          </fieldset>
+
+          <template id="pet-template">
+            <article>
+              <header><h4>Additional pet</h4></header>
+              <fieldset class="grid">
+                <label for="pet-breed-__INDEX__"
+                  >Pet breed <abbr title="required">*</abbr>
+                  <input
+                    type="text"
+                    id="pet-breed-__INDEX__"
+                    name="pet[__INDEX__][breed]"
+                    placeholder="Pet breed"
+                    required
+                    aria-required="true"
+                  />
+                </label>
+                <label for="pet-age-__INDEX__"
+                  >Age <abbr title="required">*</abbr>
+                  <input
+                    type="number"
+                    id="pet-age-__INDEX__"
+                    name="pet[__INDEX__][age]"
+                    min="0"
+                    step="1"
+                    required
+                    aria-required="true"
+                  />
+                </label>
+              </fieldset>
+              <button type="button" class="secondary outline btn-remove-pet">Remove</button>
+            </article>
+          </template>
         </section>
 
         <!-- Navigation -->
