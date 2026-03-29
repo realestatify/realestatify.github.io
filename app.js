@@ -79,15 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Add previous address entries
-  let prevAddressCounter = 0;
-  const btnAddPrevAddress = document.getElementById("btn-add-prev-address");
-  const prevAddressesContainer = document.getElementById("prev-addresses-container");
-  const prevAddressTemplate = document.getElementById("prev-address-template");
-  if (btnAddPrevAddress && prevAddressesContainer && prevAddressTemplate) {
-    btnAddPrevAddress.addEventListener("click", () => {
-      const idx = prevAddressCounter++;
-      const clone = prevAddressTemplate.content.cloneNode(true);
+  function setupTemplateList(addBtn, container, template, removeBtnSelector) {
+    let counter = 0;
+    addBtn.addEventListener("click", () => {
+      const idx = counter++;
+      const clone = template.content.cloneNode(true);
       clone.querySelectorAll("[id]").forEach((el) => {
         el.id = el.id.replace(/__INDEX__/g, idx);
       });
@@ -98,14 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
         el.name = el.name.replace(/__INDEX__/g, idx);
       });
       const entry = clone.querySelector("fieldset");
-      const removeBtn = clone.querySelector(".btn-remove-prev-address");
+      const removeBtn = clone.querySelector(removeBtnSelector);
       if (removeBtn) {
         removeBtn.addEventListener("click", () => {
-          entry.remove();
+          entry?.remove();
         });
       }
-      prevAddressesContainer.appendChild(clone);
+      container.appendChild(clone);
     });
+  }
+
+  // Add previous address entries
+  const btnAddPrevAddress = document.getElementById("btn-add-prev-address");
+  const prevAddressesContainer = document.getElementById("prev-addresses-container");
+  const prevAddressTemplate = document.getElementById("prev-address-template");
+  if (btnAddPrevAddress && prevAddressesContainer && prevAddressTemplate) {
+    setupTemplateList(btnAddPrevAddress, prevAddressesContainer, prevAddressTemplate, ".btn-remove-prev-address");
   }
 
   // currently-unemployed checkbox: disable employment add button and existing entries
@@ -127,30 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add employment entries
-  let employmentCounter = 0;
   const employmentTemplate = document.getElementById("employment-template");
   if (btnAddEmployment && employmentsContainer && employmentTemplate) {
-    btnAddEmployment.addEventListener("click", () => {
-      const idx = employmentCounter++;
-      const clone = employmentTemplate.content.cloneNode(true);
-      clone.querySelectorAll("[id]").forEach((el) => {
-        el.id = el.id.replace(/__INDEX__/g, idx);
-      });
-      clone.querySelectorAll("[for]").forEach((el) => {
-        el.setAttribute("for", el.getAttribute("for").replace(/__INDEX__/g, idx));
-      });
-      clone.querySelectorAll("[name]").forEach((el) => {
-        el.name = el.name.replace(/__INDEX__/g, idx);
-      });
-      const entry = clone.querySelector("fieldset");
-      const removeBtn = clone.querySelector(".btn-remove-employment");
-      if (removeBtn) {
-        removeBtn.addEventListener("click", () => {
-          entry.remove();
-        });
-      }
-      employmentsContainer.appendChild(clone);
-    });
+    setupTemplateList(btnAddEmployment, employmentsContainer, employmentTemplate, ".btn-remove-employment");
   }
 
   // no-income checkbox: disable income fields
@@ -172,37 +155,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add income entries
-  let incomeCounter = 0;
   const incomeTemplate = document.getElementById("income-template");
   if (btnAddIncome && incomesContainer && incomeTemplate) {
-    btnAddIncome.addEventListener("click", () => {
-      const idx = incomeCounter++;
-      const clone = incomeTemplate.content.cloneNode(true);
-      clone.querySelectorAll("[id]").forEach((el) => {
-        el.id = el.id.replace(/__INDEX__/g, idx);
-      });
-      clone.querySelectorAll("[for]").forEach((el) => {
-        el.setAttribute("for", el.getAttribute("for").replace(/__INDEX__/g, idx));
-      });
-      clone.querySelectorAll("[name]").forEach((el) => {
-        el.name = el.name.replace(/__INDEX__/g, idx);
-      });
-      const entry = clone.querySelector("fieldset");
-      const removeBtn = clone.querySelector(".btn-remove-income");
-      if (removeBtn) {
-        removeBtn.addEventListener("click", () => {
-          entry.remove();
-        });
-      }
-      incomesContainer.appendChild(clone);
-    });
+    setupTemplateList(btnAddIncome, incomesContainer, incomeTemplate, ".btn-remove-income");
   }
 
   // no-ex-occupant checkbox: disable occupant fields
   const noExOccupant = document.getElementById("no-ex-occupant");
   const btnAddOccupant = document.getElementById("btn-add-occupant");
   const occupantsContainer = document.getElementById("occupants-container");
-  if (noExOccupant && occupantsContainer) {
+  if (noExOccupant && btnAddOccupant && occupantsContainer) {
     noExOccupant.addEventListener("change", () => {
       const disabled = noExOccupant.checked;
       btnAddOccupant.disabled = disabled;
@@ -215,30 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add additional occupant entries
-  let occupantCounter = 0;
   const occupantTemplate = document.getElementById("occupant-template");
   if (btnAddOccupant && occupantsContainer && occupantTemplate) {
-    btnAddOccupant.addEventListener("click", () => {
-      const idx = occupantCounter++;
-      const clone = occupantTemplate.content.cloneNode(true);
-      clone.querySelectorAll("[id]").forEach((el) => {
-        el.id = el.id.replace(/__INDEX__/g, idx);
-      });
-      clone.querySelectorAll("[for]").forEach((el) => {
-        el.setAttribute("for", el.getAttribute("for").replace(/__INDEX__/g, idx));
-      });
-      clone.querySelectorAll("[name]").forEach((el) => {
-        el.name = el.name.replace(/__INDEX__/g, idx);
-      });
-      const entry = clone.querySelector("fieldset");
-      const removeBtn = clone.querySelector(".btn-remove-occupant");
-      if (removeBtn) {
-        removeBtn.addEventListener("click", () => {
-          entry.remove();
-        });
-      }
-      occupantsContainer.appendChild(clone);
-    });
+    setupTemplateList(btnAddOccupant, occupantsContainer, occupantTemplate, ".btn-remove-occupant");
   }
 
   // Form submit: validate all steps
