@@ -31,6 +31,41 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0);
   }
 
+  // Checkbox validation rules: each entry maps a checkbox id to the id of the
+  // container that holds the "additional data" alternative.  When the container
+  // has no user-added entries the checkbox MUST be explicitly checked.
+  // Checkboxes that have no related container (like "smoking") are always
+  // required to be explicitly checked — represented by a null container.
+  const checkboxRules = [
+    { checkboxId: "currently-unemployed", containerId: "employments-container" },
+    { checkboxId: "no-income", containerId: "incomes-container" },
+    { checkboxId: "no-ex-occupant", containerId: "occupants-container" },
+    { checkboxId: "no-pets", containerId: "pets-container" },
+  ];
+
+  function containerHasEntries(containerId) {
+    if (!containerId) return false;
+    const container = document.getElementById(containerId);
+    // Each dynamically-added entry is wrapped in an <article>
+    return container && container.querySelectorAll("article").length > 0;
+  }
+
+  function validateCheckboxes(stepEl) {
+    let firstInvalid = null;
+    checkboxRules.forEach((rule) => {
+      const cb = stepEl.querySelector("#" + rule.checkboxId);
+      if (!cb) return; // checkbox not on this step
+      const hasData = containerHasEntries(rule.containerId);
+      if (!cb.checked && !hasData) {
+        cb.setAttribute("aria-invalid", "true");
+        if (!firstInvalid) firstInvalid = cb;
+      } else {
+        cb.removeAttribute("aria-invalid");
+      }
+    });
+    return firstInvalid;
+  }
+
   function validateStep(n) {
     const stepEl = document.querySelector('.form-step[data-step="' + n + '"]');
     if (!stepEl) return true;
@@ -44,6 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
         field.setAttribute("aria-invalid", "false");
       }
     });
+
+    // Also validate checkboxes on this step
+    const firstInvalidCb = validateCheckboxes(stepEl);
+    if (!firstInvalid) firstInvalid = firstInvalidCb;
+
     if (firstInvalid) {
       firstInvalid.focus();
       return false;
@@ -112,11 +152,21 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTemplateList(btnAddPrevAddress, prevAddressesContainer, prevAddressTemplate, ".btn-remove-prev-address");
   }
 
+  // Helper: clear aria-invalid on a checkbox when it is toggled
+  function clearCheckboxInvalidOnChange(cb) {
+    if (cb) {
+      cb.addEventListener("change", () => {
+        cb.removeAttribute("aria-invalid");
+      });
+    }
+  }
+
   // currently-unemployed checkbox: disable employment add button and existing entries
   const currentlyUnemployed = document.getElementById("currently-unemployed");
   const btnAddEmployment = document.getElementById("btn-add-employment");
   const employmentsContainer = document.getElementById("employments-container");
   if (currentlyUnemployed && btnAddEmployment) {
+    clearCheckboxInvalidOnChange(currentlyUnemployed);
     currentlyUnemployed.addEventListener("change", () => {
       const disabled = currentlyUnemployed.checked;
       btnAddEmployment.disabled = disabled;
@@ -141,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAddIncome = document.getElementById("btn-add-income");
   const incomesContainer = document.getElementById("incomes-container");
   if (noIncome && btnAddIncome) {
+    clearCheckboxInvalidOnChange(noIncome);
     noIncome.addEventListener("change", () => {
       const disabled = noIncome.checked;
       btnAddIncome.disabled = disabled;
@@ -165,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAddOccupant = document.getElementById("btn-add-occupant");
   const occupantsContainer = document.getElementById("occupants-container");
   if (noExOccupant && btnAddOccupant && occupantsContainer) {
+    clearCheckboxInvalidOnChange(noExOccupant);
     noExOccupant.addEventListener("change", () => {
       const disabled = noExOccupant.checked;
       btnAddOccupant.disabled = disabled;
@@ -187,6 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAddPet = document.getElementById("btn-add-pet");
   const petsContainer = document.getElementById("pets-container");
   if (noPets && btnAddPet && petsContainer) {
+    clearCheckboxInvalidOnChange(noPets);
     noPets.addEventListener("change", () => {
       const disabled = noPets.checked;
       btnAddPet.disabled = disabled;
@@ -226,6 +279,18 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         } else {
           field.setAttribute("aria-invalid", "false");
+        }
+      });
+
+      // Validate all checkboxes across every step
+      document.querySelectorAll(".form-step").forEach((stepEl) => {
+        const invalidCb = validateCheckboxes(stepEl);
+        if (invalidCb) {
+          hasError = true;
+          if (!firstInvalid) {
+            firstInvalid = invalidCb;
+            firstInvalidStep = parseInt(stepEl.getAttribute("data-step"), 10);
+          }
         }
       });
 
