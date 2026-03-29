@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnNext = document.getElementById("btn-next");
   const btnSubmit = document.getElementById("btn-submit");
 
-  function showStep(n) {
+  function showStep(n, options) {
+    var pushState = !(options && options.skipPush);
+
     document.querySelectorAll(".form-step").forEach((el) => {
       el.hidden = true;
     });
@@ -29,6 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     currentStep = n;
     window.scrollTo(0, 0);
+
+    // Keep the URL query parameter in sync with the visible step
+    if (pushState) {
+      const url = new URL(window.location);
+      url.searchParams.set("step", n);
+      history.pushState({ step: n }, "", url);
+    }
   }
 
   // Checkbox validation rules: each entry maps a checkbox id to the id of the
@@ -107,8 +116,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Initialise wizard
-  showStep(1);
+  // Restore step from URL query parameter (e.g. ?step=3), default to 1
+  const urlStep = parseInt(new URLSearchParams(window.location.search).get("step"), 10);
+  const initialStep = urlStep >= 1 && urlStep <= TOTAL_STEPS ? urlStep : 1;
+  // Use replaceState for the initial load so we don't create an extra
+  // history entry, then render without pushing again.
+  const initUrl = new URL(window.location);
+  initUrl.searchParams.set("step", initialStep);
+  history.replaceState({ step: initialStep }, "", initUrl);
+  showStep(initialStep, { skipPush: true });
+
+  // Handle browser back / forward buttons
+  window.addEventListener("popstate", event => {
+    const step = event.state && event.state.step;
+    if (step >= 1 && step <= TOTAL_STEPS) {
+      showStep(step, { skipPush: true });
+    }
+  });
 
   // Character counter for about-me textarea
   const aboutMe = document.getElementById("about-me");
