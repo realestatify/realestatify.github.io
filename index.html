@@ -1,11 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your application</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css" />
     <style>
       :root {
         --pico-form-element-spacing-vertical: 0.35rem;
@@ -45,7 +44,7 @@
               >Lease Term <abbr title="required">*</abbr>
               <select id="lease-term" name="lease_term" aria-label="Lease Term" required aria-required="true">
                 <option disabled value="6">6 months</option>
-                <option selected value="12">1 year</option>
+                <option selected value="12">12 months</option>
                 <option value="24">2 years</option>
               </select>
             </label>
@@ -71,8 +70,8 @@
                 required
                 aria-required="true"
               >
-                <option value="fortnightly">Fortnightly</option>
-                <option selected value="monthly">Monthly</option>
+                <option selected value="fortnightly">Fortnightly</option>
+                <option value="monthly">Monthly</option>
               </select>
             </label>
 
