@@ -404,15 +404,17 @@
               <input type="text" id="ref-name" name="ref_name" placeholder="Reference full name" />
             </label>
 
-            <label for="ref-email"
-              >Email
-              <input type="email" id="ref-email" name="ref_email" placeholder="reference@example.com" />
-            </label>
+            <fieldset class="grid">
+              <label for="ref-phone"
+                >Phone
+                <input type="tel" id="ref-phone" name="ref_phone" placeholder="e.g. 0412 345 678" />
+              </label>
 
-            <label for="ref-phone"
-              >Phone
-              <input type="tel" id="ref-phone" name="ref_phone" placeholder="e.g. 0412 345 678" />
-            </label>
+              <label for="ref-email"
+                >Email
+                <input type="email" id="ref-email" name="ref_email" placeholder="reference@example.com" />
+              </label>
+            </fieldset>
           </article>
         </section>
 
@@ -508,12 +510,12 @@
           </label>
 
           <fieldset class="grid">
-            <label for="ec-mobile"
-              >Mobile <abbr title="required">*</abbr>
+            <label for="ec-phone"
+              >Phone <abbr title="required">*</abbr>
               <input
                 type="tel"
-                id="ec-mobile"
-                name="ec_mobile"
+                id="ec-phone"
+                name="ec_phone"
                 placeholder="e.g. 0412 345 678"
                 required
                 aria-required="true"
