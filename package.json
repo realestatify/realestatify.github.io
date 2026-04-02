@@ -4,6 +4,15 @@
   "private": true,
   "description": "A single-page static rent application form",
   "scripts": {
-    "start": "npx serve ."
+    "start": "npx serve .",
+    "lint": "oxlint app.js",
+    "lint:fix": "oxlint --fix app.js",
+    "fmt": "oxfmt --write app.js",
+    "fmt:check": "oxfmt --check app.js",
+    "check": "oxlint app.js && oxfmt --check app.js"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0"
   }
 }

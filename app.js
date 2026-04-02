@@ -185,7 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevAddressesContainer = document.getElementById("prev-addresses-container");
   const prevAddressTemplate = document.getElementById("prev-address-template");
   if (btnAddPrevAddress && prevAddressesContainer && prevAddressTemplate) {
-    setupTemplateList(btnAddPrevAddress, prevAddressesContainer, prevAddressTemplate, ".btn-remove-prev-address");
+    setupTemplateList(
+      btnAddPrevAddress,
+      prevAddressesContainer,
+      prevAddressTemplate,
+      ".btn-remove-prev-address",
+    );
   }
 
   // Helper: clear aria-invalid on a checkbox when it is toggled
@@ -219,7 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add employment entries
   const employmentTemplate = document.getElementById("employment-template");
   if (btnAddEmployment && employmentsContainer && employmentTemplate) {
-    setupTemplateList(btnAddEmployment, employmentsContainer, employmentTemplate, ".btn-remove-employment");
+    setupTemplateList(
+      btnAddEmployment,
+      employmentsContainer,
+      employmentTemplate,
+      ".btn-remove-employment",
+    );
   }
 
   // no-income checkbox: disable income fields
