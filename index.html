@@ -17,14 +17,8 @@
         --pico-form-element-spacing-horizontal: 0.75rem;
         --pico-font-size: 1rem;
       }
-      abbr[title="required"] {
+      span[title="required"] {
         color: var(--pico-del-color);
-        text-decoration: none;
-      }
-      #step-indicator {
-        color: var(--pico-muted-color);
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
       }
     </style>
   </head>
@@ -36,7 +30,7 @@
     </header>
     <main class="container">
       <form id="rent-application" action="https://formspree.io/f/xgopozbe" method="POST" enctype="multipart/form-data">
-        <p id="step-indicator">Step 1 of 7</p>
+        <small><ins id="step-indicator">Step 1 of 7</ins></small>
 
         <!-- Step 1: Application details -->
         <section class="form-step" data-step="1">
@@ -45,7 +39,7 @@
             <header><h3>Lease</h3></header>
             <fieldset class="grid">
               <label for="lease-term"
-                >Lease Term <abbr title="required">*</abbr>
+                >Lease Term <span title="required">*</span>
                 <select id="lease-term" name="lease_term" aria-label="Lease Term" required aria-required="true">
                   <option disabled value="6">6 months</option>
                   <option selected value="12">12 months</option>
@@ -53,7 +47,7 @@
                 </select>
               </label>
               <label for="lease-commencement-date"
-                >Lease commencement date <abbr title="required">*</abbr>
+                >Lease commencement date <span title="required">*</span>
                 <input
                   type="date"
                   id="lease-commencement-date"
@@ -66,7 +60,7 @@
 
             <fieldset class="grid">
               <label for="payment-method"
-                >Preferred payment method <abbr title="required">*</abbr>
+                >Preferred payment method <span title="required">*</span>
                 <select
                   id="payment-method"
                   name="payment_method"
@@ -80,7 +74,7 @@
               </label>
 
               <label for="bond"
-                >How do you want to lodge bond <abbr title="required">*</abbr>
+                >How do you want to lodge bond <span title="required">*</span>
                 <select id="bond" name="bond" aria-label="Bond" required aria-required="true">
                   <option selected value="rbo">Directly online via RBO</option>
                   <option value="landlord">Via landlord</option>
@@ -114,7 +108,7 @@
             <header><h3>Personal details</h3></header>
             <fieldset class="grid">
               <label for="first-name"
-                >First name <abbr title="required">*</abbr>
+                >First name <span title="required">*</span>
                 <input
                   type="text"
                   id="first-name"
@@ -126,7 +120,7 @@
                 />
               </label>
               <label for="last-name"
-                >Last name <abbr title="required">*</abbr>
+                >Last name <span title="required">*</span>
                 <input
                   type="text"
                   id="last-name"
@@ -140,13 +134,13 @@
             </fieldset>
 
             <label for="dob"
-              >Date of birth <abbr title="required">*</abbr>
+              >Date of birth <span title="required">*</span>
               <input type="date" id="dob" name="dob" min="1900-01-01" required aria-required="true" />
             </label>
 
             <fieldset class="grid">
               <label for="phone"
-                >Phone <abbr title="required">*</abbr>
+                >Phone <span title="required">*</span>
                 <input
                   type="tel"
                   id="phone"
@@ -159,7 +153,7 @@
               </label>
 
               <label for="email"
-                >Email <abbr title="required">*</abbr>
+                >Email <span title="required">*</span>
                 <input
                   type="email"
                   id="email"
@@ -314,9 +308,9 @@
           <h2>Personal</h2>
           <h3>
             Employment
-            <abbr
+            <span
               title="Provide your current employment details. This helps us verify your ability to meet rental payments."
-              >*</abbr
+              >*</span
             >
           </h3>
 
@@ -340,7 +334,7 @@
             <article>
               <header><h4>Employment</h4></header>
               <label for="employment-company-__INDEX__"
-                >Company / Employer <abbr title="required">*</abbr>
+                >Company / Employer <span title="required">*</span>
                 <input
                   type="text"
                   id="employment-company-__INDEX__"
@@ -351,7 +345,7 @@
                 />
               </label>
               <label for="employment-role-__INDEX__"
-                >Role / Title <abbr title="required">*</abbr>
+                >Role / Title <span title="required">*</span>
                 <input
                   type="text"
                   id="employment-role-__INDEX__"
@@ -363,7 +357,7 @@
               </label>
               <fieldset class="grid">
                 <label for="employment-type-__INDEX__"
-                  >Employment type <abbr title="required">*</abbr>
+                  >Employment type <span title="required">*</span>
                   <select
                     id="employment-type-__INDEX__"
                     name="employment[__INDEX__][type]"
@@ -383,7 +377,7 @@
                   </select>
                 </label>
                 <label for="employment-start-__INDEX__"
-                  >Start date <abbr title="required">*</abbr>
+                  >Start date <span title="required">*</span>
                   <input
                     type="date"
                     id="employment-start-__INDEX__"
@@ -457,7 +451,7 @@
               <header><h4>Income source</h4></header>
               <fieldset class="grid">
                 <label for="income-type-__INDEX__"
-                  >Income type <abbr title="required">*</abbr>
+                  >Income type <span title="required">*</span>
                   <select
                     id="income-type-__INDEX__"
                     name="income[__INDEX__][type]"
@@ -475,7 +469,7 @@
                   </select>
                 </label>
                 <label for="income-amount-__INDEX__"
-                  >Income amount (per week) <abbr title="required">*</abbr>
+                  >Income amount (per week) <span title="required">*</span>
                   <input
                     type="number"
                     id="income-amount-__INDEX__"
@@ -499,7 +493,7 @@
           <article>
             <header><h3>Emergency contact</h3></header>
             <label for="ec-name"
-              >Full name <abbr title="required">*</abbr>
+              >Full name <span title="required">*</span>
               <input
                 type="text"
                 id="ec-name"
@@ -511,7 +505,7 @@
             </label>
 
             <label for="ec-relationship"
-              >Relationship <abbr title="required">*</abbr>
+              >Relationship <span title="required">*</span>
               <select
                 id="ec-relationship"
                 name="ec_relationship"
@@ -531,7 +525,7 @@
 
             <fieldset class="grid">
               <label for="ec-phone"
-                >Phone <abbr title="required">*</abbr>
+                >Phone <span title="required">*</span>
                 <input
                   type="tel"
                   id="ec-phone"
@@ -553,7 +547,7 @@
         <!-- Step 7: People -->
         <section class="form-step" data-step="7" hidden>
           <h2>Household</h2>
-          <h3>People <abbr title="Will anyone else be living with you?">*</abbr></h3>
+          <h3>People <span title="Will anyone else be living with you?">*</span></h3>
 
           <div id="occupants-container"></div>
 
@@ -582,7 +576,7 @@
               <header><h4>Additional occupant</h4></header>
               <fieldset class="grid">
                 <label for="occupant-first-name-__INDEX__"
-                  >First name <abbr title="required">*</abbr>
+                  >First name <span title="required">*</span>
                   <input
                     type="text"
                     id="occupant-first-name-__INDEX__"
@@ -593,7 +587,7 @@
                   />
                 </label>
                 <label for="occupant-last-name-__INDEX__"
-                  >Last name <abbr title="required">*</abbr>
+                  >Last name <span title="required">*</span>
                   <input
                     type="text"
                     id="occupant-last-name-__INDEX__"
@@ -604,7 +598,7 @@
                   />
                 </label>
                 <label for="occupant-age-__INDEX__"
-                  >Age <abbr title="required">*</abbr>
+                  >Age <span title="required">*</span>
                   <input
                     type="number"
                     id="occupant-age-__INDEX__"
@@ -646,7 +640,7 @@
               <header><h4>Additional pet</h4></header>
               <fieldset class="grid">
                 <label for="pet-breed-__INDEX__"
-                  >Pet breed <abbr title="required">*</abbr>
+                  >Pet breed <span title="required">*</span>
                   <input
                     type="text"
                     id="pet-breed-__INDEX__"
@@ -657,7 +651,7 @@
                   />
                 </label>
                 <label for="pet-age-__INDEX__"
-                  >Age <abbr title="required">*</abbr>
+                  >Age <span title="required">*</span>
                   <input
                     type="number"
                     id="pet-age-__INDEX__"
