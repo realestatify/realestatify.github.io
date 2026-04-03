@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnSubmit = document.getElementById("btn-submit");
 
   function showStep(n, options) {
-    var pushState = !(options && options.skipPush);
+    const pushState = !(options && options.skipPush);
 
     document.querySelectorAll(".form-step").forEach((el) => {
       el.hidden = true;
@@ -75,24 +75,79 @@ document.addEventListener("DOMContentLoaded", () => {
     return firstInvalid;
   }
 
-  function validateStep(n) {
-    const stepEl = document.querySelector('.form-step[data-step="' + n + '"]');
-    if (!stepEl) return true;
-    const fields = stepEl.querySelectorAll("[required]");
+  // ---------------------------------------------------------------------------
+  // Field-level error hints – shown/hidden via a <small> after the field
+  // ---------------------------------------------------------------------------
+  function setFieldError(field, message) {
+    field.setAttribute("aria-invalid", "true");
+    let hint = field.nextElementSibling;
+    if (!hint || !hint.classList.contains("field-error")) {
+      hint = document.createElement("small");
+      hint.classList.add("field-error");
+      hint.style.color = "var(--pico-del-color)";
+      field.insertAdjacentElement("afterend", hint);
+    }
+    hint.textContent = message;
+  }
+
+  function clearFieldError(field) {
+    field.setAttribute("aria-invalid", "false");
+    const hint = field.nextElementSibling;
+    if (hint && hint.classList.contains("field-error")) {
+      hint.remove();
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Single-field validation using the browser Constraint Validation API.
+  // Returns the browser's localised error message, or null if valid.
+  // ---------------------------------------------------------------------------
+  function validateField(field) {
+    // Skip disabled fields (e.g. toggled off by "currently unemployed")
+    if (field.disabled) return null;
+
+    // Let the browser do the heavy lifting — it already knows about required,
+    // type="email", pattern, min/max, maxlength, step, etc.
+    if (!field.checkValidity()) {
+      return field.validationMessage;
+    }
+
+    return null;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Validate every visible, non-disabled field on a given step section element.
+  // Returns the first invalid element (or null if all valid).
+  // ---------------------------------------------------------------------------
+  function validateStepFields(stepEl) {
+    // Validate all input, select, textarea – not just [required] ones – so
+    // we also catch pattern / type mismatches on optional fields.
+    const fields = stepEl.querySelectorAll("input, select, textarea");
     let firstInvalid = null;
+
     fields.forEach((field) => {
-      if (!field.value || field.value.trim() === "") {
-        field.setAttribute("aria-invalid", "true");
+      const error = validateField(field);
+      if (error) {
+        setFieldError(field, error);
         if (!firstInvalid) firstInvalid = field;
       } else {
-        field.setAttribute("aria-invalid", "false");
+        clearFieldError(field);
       }
     });
 
+    return firstInvalid;
+  }
+
+  function validateStep(n) {
+    const stepEl = document.querySelector('.form-step[data-step="' + n + '"]');
+    if (!stepEl) return true;
+
+    const firstInvalidField = validateStepFields(stepEl);
+
     // Also validate checkboxes on this step
     const firstInvalidCb = validateCheckboxes(stepEl);
-    if (!firstInvalid) firstInvalid = firstInvalidCb;
 
+    const firstInvalid = firstInvalidField || firstInvalidCb;
     if (firstInvalid) {
       firstInvalid.focus();
       return false;
@@ -160,14 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
     addBtn.addEventListener("click", () => {
       const idx = counter++;
       const clone = template.content.cloneNode(true);
-      clone.querySelectorAll("[id]").forEach((el) => {
-        el.id = el.id.replace(/__INDEX__/g, idx);
-      });
-      clone.querySelectorAll("[for]").forEach((el) => {
-        el.setAttribute("for", el.getAttribute("for").replace(/__INDEX__/g, idx));
-      });
-      clone.querySelectorAll("[name]").forEach((el) => {
-        el.name = el.name.replace(/__INDEX__/g, idx);
+      clone.querySelectorAll("*").forEach((el) => {
+        for (const attr of el.attributes) {
+          if (attr.value.includes("__INDEX__")) {
+            el.setAttribute(attr.name, attr.value.replace(/__INDEX__/g, idx));
+          }
+        }
       });
       const entry = clone.querySelector("article");
       const removeBtn = clone.querySelector(removeBtnSelector);
@@ -303,39 +356,26 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTemplateList(btnAddPet, petsContainer, petTemplate, ".btn-remove-pet");
   }
 
-  // Form submit: validate all steps
+  // Form submit: validate every step, reusing the per-step logic
   const form = document.getElementById("rent-application");
   if (form) {
     form.addEventListener("submit", (event) => {
-      const requiredFields = form.querySelectorAll("[required]");
       let hasError = false;
       let firstInvalid = null;
       let firstInvalidStep = null;
 
-      requiredFields.forEach((field) => {
-        if (!field.value || field.value.trim() === "") {
-          field.setAttribute("aria-invalid", "true");
-          hasError = true;
-          if (!firstInvalid) {
-            firstInvalid = field;
-            const stepEl = field.closest(".form-step");
-            if (stepEl) {
-              firstInvalidStep = parseInt(stepEl.getAttribute("data-step"), 10);
-            }
-          }
-        } else {
-          field.setAttribute("aria-invalid", "false");
-        }
-      });
-
-      // Validate all checkboxes across every step
       document.querySelectorAll(".form-step").forEach((stepEl) => {
+        const stepNum = parseInt(stepEl.getAttribute("data-step"), 10);
+
+        const invalidField = validateStepFields(stepEl);
         const invalidCb = validateCheckboxes(stepEl);
-        if (invalidCb) {
+        const invalid = invalidField || invalidCb;
+
+        if (invalid) {
           hasError = true;
           if (!firstInvalid) {
-            firstInvalid = invalidCb;
-            firstInvalidStep = parseInt(stepEl.getAttribute("data-step"), 10);
+            firstInvalid = invalid;
+            firstInvalidStep = stepNum;
           }
         }
       });
@@ -351,11 +391,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Clear aria-invalid as user corrects fields
+    // Clear field errors as the user corrects values
     form.addEventListener("input", (event) => {
       const field = event.target;
-      if (field.hasAttribute("required") && field.value && field.value.trim() !== "") {
-        field.setAttribute("aria-invalid", "false");
+      const error = validateField(field);
+      if (!error) {
+        clearFieldError(field);
+      }
+    });
+
+    // Also clear on change (covers selects and checkboxes)
+    form.addEventListener("change", (event) => {
+      const field = event.target;
+      const error = validateField(field);
+      if (!error) {
+        clearFieldError(field);
       }
     });
   }

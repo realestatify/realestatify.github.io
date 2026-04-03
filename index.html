@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
+    <meta description="Rent Application Form" />
+    <title>Rent Application Form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.orange.min.css" />
     <link rel="icon" href="favicon.ico" sizes="48x48" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -64,7 +66,7 @@
 
             <fieldset class="grid">
               <label for="payment-method"
-                >Prefered payment method <abbr title="required">*</abbr>
+                >Preferred payment method <abbr title="required">*</abbr>
                 <select
                   id="payment-method"
                   name="payment_method"
@@ -477,7 +479,7 @@
                   <input
                     type="number"
                     id="income-amount-__INDEX__"
-                    name="additional_income[__INDEX__][amount]"
+                    name="income[__INDEX__][amount]"
                     placeholder="0.00"
                     min="0"
                     step="0.01"
