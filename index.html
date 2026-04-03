@@ -19,9 +19,6 @@
         color: var(--pico-del-color);
         text-decoration: none;
       }
-      .info-icon {
-        font-size: 1rem;
-      }
       #step-indicator {
         color: var(--pico-muted-color);
         font-size: 0.875rem;
@@ -42,144 +39,142 @@
         <!-- Step 1: Application details -->
         <section class="form-step" data-step="1">
           <h2>Application</h2>
-          <h3>Lease</h3>
-          <fieldset class="grid">
-            <label for="lease-term"
-              >Lease Term <abbr title="required">*</abbr>
-              <select id="lease-term" name="lease_term" aria-label="Lease Term" required aria-required="true">
-                <option disabled value="6">6 months</option>
-                <option selected value="12">12 months</option>
-                <option value="24">2 years</option>
-              </select>
-            </label>
-            <label for="lease-commencement-date"
-              >Lease commencement date <abbr title="required">*</abbr>
-              <input
-                type="date"
-                id="lease-commencement-date"
-                name="lease_commencement_date"
-                required
-                aria-required="true"
-              />
-            </label>
-          </fieldset>
-
-          <fieldset class="grid">
-            <label for="payment-method"
-              >Prefered payment method <abbr title="required">*</abbr>
-              <select
-                id="payment-method"
-                name="payment_method"
-                aria-label="Payment method"
-                required
-                aria-required="true"
-              >
-                <option selected value="fortnightly">Fortnightly</option>
-                <option value="monthly">Monthly</option>
-              </select>
-            </label>
-
-            <label for="bond"
-              >How do you want to lodge bond <abbr title="required">*</abbr>
-              <select id="bond" name="bond" aria-label="Bond" required aria-required="true">
-                <option selected value="rbo">Directly online via RBO</option>
-                <option value="landlord">Via landlord</option>
-              </select>
-            </label>
-          </fieldset>
-
-          <label for="inspected">
-            <input type="checkbox" id="inspected" name="inspected" role="switch" />
-            Have you inspected the property?
-          </label>
-
           <article>
-            <span class="info-icon">&#9432;</span>
-            Tell us a little about yourself — your lifestyle, why you're moving, and anything else that might help your
-            application stand out.
-          </article>
+            <header><h3>Lease</h3></header>
+            <fieldset class="grid">
+              <label for="lease-term"
+                >Lease Term <abbr title="required">*</abbr>
+                <select id="lease-term" name="lease_term" aria-label="Lease Term" required aria-required="true">
+                  <option disabled value="6">6 months</option>
+                  <option selected value="12">12 months</option>
+                  <option value="24">2 years</option>
+                </select>
+              </label>
+              <label for="lease-commencement-date"
+                >Lease commencement date <abbr title="required">*</abbr>
+                <input
+                  type="date"
+                  id="lease-commencement-date"
+                  name="lease_commencement_date"
+                  required
+                  aria-required="true"
+                />
+              </label>
+            </fieldset>
 
-          <label for="about-me"
-            >About Me:
-            <textarea
-              id="about-me"
-              name="about_me"
-              maxlength="3000"
-              rows="5"
-              placeholder="Write something about yourself..."
-            ></textarea>
-            <small><span id="about-me-count">0</span>/3000</small>
-          </label>
+            <fieldset class="grid">
+              <label for="payment-method"
+                >Prefered payment method <abbr title="required">*</abbr>
+                <select
+                  id="payment-method"
+                  name="payment_method"
+                  aria-label="Payment method"
+                  required
+                  aria-required="true"
+                >
+                  <option selected value="fortnightly">Fortnightly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </label>
+
+              <label for="bond"
+                >How do you want to lodge bond <abbr title="required">*</abbr>
+                <select id="bond" name="bond" aria-label="Bond" required aria-required="true">
+                  <option selected value="rbo">Directly online via RBO</option>
+                  <option value="landlord">Via landlord</option>
+                </select>
+              </label>
+            </fieldset>
+
+            <label for="inspected">
+              <input type="checkbox" id="inspected" name="inspected" role="switch" />
+              Have you inspected the property?
+            </label>
+
+            <label for="about-me"
+              >About Me:
+              <textarea
+                id="about-me"
+                name="about_me"
+                maxlength="3000"
+                rows="5"
+                placeholder="Tell us a little about yourself — your lifestyle, why you're moving, and anything else that might help your application stand out."
+              ></textarea>
+              <small><span id="about-me-count">0</span>/3000</small>
+            </label>
+          </article>
         </section>
 
         <!-- Step 2: Personal details -->
         <section class="form-step" data-step="2" hidden>
           <h2>Personal</h2>
-          <h3>Personal details</h3>
-          <fieldset class="grid">
-            <label for="first-name"
-              >First name <abbr title="required">*</abbr>
-              <input
-                type="text"
-                id="first-name"
-                name="first_name"
-                placeholder="First name"
-                autocomplete="given-name"
-                required
-                aria-required="true"
-              />
-            </label>
-            <label for="last-name"
-              >Last name <abbr title="required">*</abbr>
-              <input
-                type="text"
-                id="last-name"
-                name="last_name"
-                placeholder="Last name"
-                autocomplete="family-name"
-                required
-                aria-required="true"
-              />
-            </label>
-          </fieldset>
+          <article>
+            <header><h3>Personal details</h3></header>
+            <fieldset class="grid">
+              <label for="first-name"
+                >First name <abbr title="required">*</abbr>
+                <input
+                  type="text"
+                  id="first-name"
+                  name="first_name"
+                  placeholder="First name"
+                  autocomplete="given-name"
+                  required
+                  aria-required="true"
+                />
+              </label>
+              <label for="last-name"
+                >Last name <abbr title="required">*</abbr>
+                <input
+                  type="text"
+                  id="last-name"
+                  name="last_name"
+                  placeholder="Last name"
+                  autocomplete="family-name"
+                  required
+                  aria-required="true"
+                />
+              </label>
+            </fieldset>
 
-          <label for="dob"
-            >Date of birth <abbr title="required">*</abbr>
-            <input type="date" id="dob" name="dob" min="1900-01-01" max="2023-01-01" required aria-required="true" />
-          </label>
-
-          <fieldset class="grid">
-            <label for="phone"
-              >Phone <abbr title="required">*</abbr>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="e.g. 0412 345 678"
-                autocomplete="tel"
-                required
-                aria-required="true"
-              />
+            <label for="dob"
+              >Date of birth <abbr title="required">*</abbr>
+              <input type="date" id="dob" name="dob" min="1900-01-01" max="2023-01-01" required aria-required="true" />
             </label>
 
-            <label for="email"
-              >Email <abbr title="required">*</abbr>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="you@example.com"
-                autocomplete="email"
-                required
-                aria-required="true"
-              />
-            </label>
-          </fieldset>
+            <fieldset class="grid">
+              <label for="phone"
+                >Phone <abbr title="required">*</abbr>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="e.g. 0412 345 678"
+                  autocomplete="tel"
+                  required
+                  aria-required="true"
+                />
+              </label>
 
-          <label for="poi"
-            >Proof of identity
-            <input type="file" id="poi" name="poi" accept=".doc, .jpg, .jpeg, .pdf, .png" multiple />
-          </label>
+              <label for="email"
+                >Email <abbr title="required">*</abbr>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                />
+              </label>
+            </fieldset>
+
+            <label for="poi"
+              >Proof of identity
+              <input type="file" id="poi" name="poi" accept=".doc, .jpg, .jpeg, .pdf, .png" multiple />
+            </label>
+          </article>
         </section>
 
         <!-- Step 3: Address history -->
@@ -187,7 +182,7 @@
           <h2>Personal</h2>
           <h3>Address history</h3>
           <article>
-            <h4>Current address</h4>
+            <header><h4>Current address</h4></header>
 
             <label for="street-address"
               >Street address
@@ -315,21 +310,29 @@
         <!-- Step 4: Employment -->
         <section class="form-step" data-step="4" hidden>
           <h2>Personal</h2>
-          <h3>Employment</h3>
-          <article>
-            <span class="info-icon">&#9432;</span>
-            Provide your current employment details. This helps us verify your ability to meet rental payments.
-          </article>
+          <h3>
+            Employment
+            <abbr
+              title="Provide your current employment details. This helps us verify your ability to meet rental payments."
+              >*</abbr
+            >
+          </h3>
 
           <div id="employments-container"></div>
 
-          <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-employment" class="secondary outline">Add employment</button>
-            <label for="currently-unemployed">
-              <input type="checkbox" id="currently-unemployed" name="currently_unemployed" role="switch" />
-              Currently unemployed
-            </label>
-          </fieldset>
+          <nav>
+            <ul style="align-items: baseline">
+              <li>
+                <button type="button" id="btn-add-employment" class="secondary outline">Add employment</button>
+              </li>
+              <li>
+                <label for="currently-unemployed">
+                  <input type="checkbox" id="currently-unemployed" name="currently_unemployed" role="switch" />
+                  Currently unemployed
+                </label>
+              </li>
+            </ul>
+          </nav>
 
           <template id="employment-template">
             <article>
@@ -433,13 +436,19 @@
 
           <div id="incomes-container"></div>
 
-          <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-income" class="secondary outline">Add source of income</button>
-            <label for="no-income">
-              <input type="checkbox" id="no-income" name="no_income" role="switch" />
-              I have no income
-            </label>
-          </fieldset>
+          <nav>
+            <ul style="align-items: baseline">
+              <li>
+                <button type="button" id="btn-add-income" class="secondary outline">Add source of income</button>
+              </li>
+              <li>
+                <label for="no-income">
+                  <input type="checkbox" id="no-income" name="no_income" role="switch" />
+                  I have no income
+                </label>
+              </li>
+            </ul>
+          </nav>
 
           <template id="income-template">
             <article>
@@ -485,80 +494,86 @@
         <!-- Step 6: Emergency contact -->
         <section class="form-step" data-step="6" hidden>
           <h2>Personal</h2>
-          <h3>Emergency contact</h3>
-          <label for="ec-name"
-            >Full name <abbr title="required">*</abbr>
-            <input
-              type="text"
-              id="ec-name"
-              name="ec_name"
-              placeholder="Emergency contact name"
-              required
-              aria-required="true"
-            />
-          </label>
-
-          <label for="ec-relationship"
-            >Relationship <abbr title="required">*</abbr>
-            <select
-              id="ec-relationship"
-              name="ec_relationship"
-              aria-label="Select relationship"
-              required
-              aria-required="true"
-            >
-              <option selected disabled value="">Select relationship</option>
-              <option value="parent">Parent</option>
-              <option value="sibling">Sibling</option>
-              <option value="partner">Partner / Spouse</option>
-              <option value="friend">Friend</option>
-              <option value="colleague">Colleague</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
-
-          <fieldset class="grid">
-            <label for="ec-phone"
-              >Phone <abbr title="required">*</abbr>
+          <article>
+            <header><h3>Emergency contact</h3></header>
+            <label for="ec-name"
+              >Full name <abbr title="required">*</abbr>
               <input
-                type="tel"
-                id="ec-phone"
-                name="ec_phone"
-                placeholder="e.g. 0412 345 678"
+                type="text"
+                id="ec-name"
+                name="ec_name"
+                placeholder="Emergency contact name"
                 required
                 aria-required="true"
               />
             </label>
 
-            <label for="ec-email"
-              >Email
-              <input type="email" id="ec-email" name="ec_email" placeholder="emergency@example.com" />
+            <label for="ec-relationship"
+              >Relationship <abbr title="required">*</abbr>
+              <select
+                id="ec-relationship"
+                name="ec_relationship"
+                aria-label="Select relationship"
+                required
+                aria-required="true"
+              >
+                <option selected disabled value="">Select relationship</option>
+                <option value="parent">Parent</option>
+                <option value="sibling">Sibling</option>
+                <option value="partner">Partner / Spouse</option>
+                <option value="friend">Friend</option>
+                <option value="colleague">Colleague</option>
+                <option value="other">Other</option>
+              </select>
             </label>
-          </fieldset>
+
+            <fieldset class="grid">
+              <label for="ec-phone"
+                >Phone <abbr title="required">*</abbr>
+                <input
+                  type="tel"
+                  id="ec-phone"
+                  name="ec_phone"
+                  placeholder="e.g. 0412 345 678"
+                  required
+                  aria-required="true"
+                />
+              </label>
+
+              <label for="ec-email"
+                >Email
+                <input type="email" id="ec-email" name="ec_email" placeholder="emergency@example.com" />
+              </label>
+            </fieldset>
+          </article>
         </section>
 
         <!-- Step 7: People -->
         <section class="form-step" data-step="7" hidden>
           <h2>Household</h2>
-          <h3>People</h3>
-          <article>
-            <span class="info-icon">&#9432;</span>
-            Will anyone else be living with you?
-          </article>
+          <h3>People <abbr title="Will anyone else be living with you?">*</abbr></h3>
 
           <div id="occupants-container"></div>
 
-          <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-occupant" class="secondary outline">Add occupant</button>
-            <label for="no-ex-occupant">
-              <input type="checkbox" id="no-ex-occupant" name="no_ex_occupant" role="switch" />
-              I'll be the only occupant
-            </label>
-            <label for="smoking">
-              <input type="checkbox" id="smoking" name="smoking" role="switch" />
-              Do any of the occupants smoke?
-            </label>
-          </fieldset>
+          <nav>
+            <ul style="align-items: baseline">
+              <li>
+                <button type="button" id="btn-add-occupant" class="secondary outline">Add occupant</button>
+              </li>
+              <li>
+                <label for="no-income">
+                  <input type="checkbox" id="no-income" name="no_income" role="switch" />
+                  I have no income
+                </label>
+              </li>
+              <li>
+                <label for="smoking">
+                  <input type="checkbox" id="smoking" name="smoking" role="switch" />
+                  Do any of the occupants smoke?
+                </label>
+              </li>
+            </ul>
+          </nav>
 
           <template id="occupant-template">
             <article>
@@ -604,17 +619,25 @@
             </article>
           </template>
 
+          <hr />
+
           <h3>Pets</h3>
 
           <div id="pets-container"></div>
 
-          <fieldset class="grid" style="align-items: baseline">
-            <button type="button" id="btn-add-pet" class="secondary outline">Add pets</button>
-            <label for="no-pets">
-              <input type="checkbox" id="no-pets" name="no_pets" role="switch" />
-              No pets
-            </label>
-          </fieldset>
+          <nav>
+            <ul style="align-items: baseline">
+              <li>
+                <button type="button" id="btn-add-pet" class="secondary outline">Add pets</button>
+              </li>
+              <li>
+                <label for="no-pets">
+                  <input type="checkbox" id="no-pets" name="no_pets" role="switch" />
+                  No pets
+                </label>
+              </li>
+            </ul>
+          </nav>
 
           <template id="pet-template">
             <article>
