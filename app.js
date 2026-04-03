@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnNext = document.getElementById("btn-next");
   const btnSubmit = document.getElementById("btn-submit");
 
-  function showStep(n, options) {
-    const pushState = !(options && options.skipPush);
+  function showStep(n, skipPush = false) {
+    const pushState = !skipPush;
 
     document.querySelectorAll(".form-step").forEach((el) => {
       el.hidden = true;
@@ -43,8 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Checkbox validation rules: each entry maps a checkbox id to the id of the
   // container that holds the "additional data" alternative.  When the container
   // has no user-added entries the checkbox MUST be explicitly checked.
-  // Checkboxes that have no related container (like "smoking") are always
-  // required to be explicitly checked — represented by a null container.
   const checkboxRules = [
     { checkboxId: "currently-unemployed", containerId: "employments-container" },
     { checkboxId: "no-income", containerId: "incomes-container" },
@@ -91,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearFieldError(field) {
-    field.setAttribute("aria-invalid", "false");
+    field.removeAttribute("aria-invalid");
     const hint = field.nextElementSibling;
     if (hint && hint.classList.contains("field-error")) {
       hint.remove();
@@ -179,13 +177,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const initUrl = new URL(window.location);
   initUrl.searchParams.set("step", initialStep);
   history.replaceState({ step: initialStep }, "", initUrl);
-  showStep(initialStep, { skipPush: true });
+  showStep(initialStep, true);
 
   // Handle browser back / forward buttons
   window.addEventListener("popstate", (event) => {
     const step = event.state && event.state.step;
     if (step >= 1 && step <= TOTAL_STEPS) {
-      showStep(step, { skipPush: true });
+      showStep(step, true);
     }
   });
 
@@ -197,7 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const now = new Date();
 
     leaseCommencementDate.min = now.toISOString().split("T")[0];
-    dob.max = (now.getFullYear() - 10).toString() + "-01-01";
+    const eighteenYearsAgo = new Date(now);
+    eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+    dob.max = eighteenYearsAgo.toISOString().split("T")[0];
     movein.max = now.toISOString().split("T")[0];
   }
 
@@ -230,6 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
       container.appendChild(clone);
+      // Clear aria-invalid on the associated checkbox now that an entry exists
+      checkboxRules.forEach((rule) => {
+        if (rule.containerId === container.id) {
+          const cb = document.getElementById(rule.checkboxId);
+          if (cb) cb.removeAttribute("aria-invalid");
+        }
+      });
     });
   }
 
@@ -266,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnAddEmployment.disabled = disabled;
       btnAddEmployment.setAttribute("aria-disabled", String(disabled));
       if (employmentsContainer) {
-        employmentsContainer.querySelectorAll("fieldset select, fieldset input").forEach((el) => {
+        employmentsContainer.querySelectorAll("input, select").forEach((el) => {
           el.disabled = disabled;
           el.setAttribute("aria-disabled", String(disabled));
         });
@@ -360,7 +367,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("rent-application");
   if (form) {
     form.addEventListener("submit", (event) => {
-      let hasError = false;
       let firstInvalid = null;
       let firstInvalidStep = null;
 
@@ -371,42 +377,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const invalidCb = validateCheckboxes(stepEl);
         const invalid = invalidField || invalidCb;
 
-        if (invalid) {
-          hasError = true;
-          if (!firstInvalid) {
-            firstInvalid = invalid;
-            firstInvalidStep = stepNum;
-          }
+        if (invalid && !firstInvalid) {
+          firstInvalid = invalid;
+          firstInvalidStep = stepNum;
         }
       });
 
-      if (hasError) {
+      if (firstInvalid) {
         event.preventDefault();
         if (firstInvalidStep && firstInvalidStep !== currentStep) {
           showStep(firstInvalidStep);
         }
-        if (firstInvalid) {
-          firstInvalid.focus();
-        }
+        firstInvalid.focus();
       }
     });
 
-    // Clear field errors as the user corrects values
-    form.addEventListener("input", (event) => {
-      const field = event.target;
-      const error = validateField(field);
-      if (!error) {
-        clearFieldError(field);
+    // Clear field errors as the user corrects values (input = text/range; change = selects/checkboxes)
+    function clearOnCorrect(event) {
+      if (!validateField(event.target)) {
+        clearFieldError(event.target);
       }
-    });
-
-    // Also clear on change (covers selects and checkboxes)
-    form.addEventListener("change", (event) => {
-      const field = event.target;
-      const error = validateField(field);
-      if (!error) {
-        clearFieldError(field);
-      }
-    });
+    }
+    form.addEventListener("input", clearOnCorrect);
+    form.addEventListener("change", clearOnCorrect);
   }
 });
